@@ -17,7 +17,9 @@
   - [参考文献](#参考文献)  
 
 ## *[Option型](https://github.com/scala/scala/blob/2.12.x/src/library/scala/Option.scala)*
+
 ### 概要
+
 Optionは、2つの子クラスを持っている。
 返したい値はSomeに入れて返す、Someクラスと処理できなかった事を表すときにNoneを返す、Noneオブジェクトがある。
 このOptionを使うことで、何かの処理結果（オブジェクト）を返すメソッドにおいて、処理できなかった場合(エラー)の処理を事前に決めておくことができ、Javaのようにnullを返すことで起こる、NullPointerExceptionというエラーをなくすことができる。
@@ -237,9 +239,14 @@ res1: Seq[Some[Int]] = List(Some(1), Some(2))
 ## *参考文献*
 ---
 [Scala object Option](https://github.com/scala/scala/blob/2.12.x/src/library/scala/Option.scala)
+
 [Scala Option(Some・None)](https://www.ne.jp/asahi/hishidama/home/tech/scala/option.html)
+
 [[Scala]OptionとListのmap()に感動する](https://qiita.com/takudo/items/dca70d8b2a639a7663d9)
+
 [flatMapをマスターする](https://qiita.com/mtoyoshi/items/c95cc88de2910945c39d#flatten--map)
+
 [Scalaオブジェクト](https://www.ne.jp/asahi/hishidama/home/tech/scala/object.html)
+
 Scalaスケーラブルプログラミング
 (P85,4.4章,Scalaアプリケーション),(P280, 15.6章, Option型),(P473, 24.7章, マップ),

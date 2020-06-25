@@ -201,7 +201,9 @@ export class AppComponent {
 }
 ```
 上記実装を行っても下記画像のような結果になります。
+
 <img width="485" alt="スクリーンショット 2020-06-21 15 39 20" src="https://user-images.githubusercontent.com/57429437/85218450-627d3480-b3d5-11ea-9577-24612986c56a.png">
+
 元々定義していたクラスが打ち消されてバインディングして追加したクラスのみになってしまいます。これでは新たにクラス名を追加、削除したという実装を行おうとすると既存のクラスも同様にバインディングして追加する必要が出てきてしまいます。
 上記実装を簡単にクラスバインディングを使用して実装してみましょう。
 
@@ -221,7 +223,9 @@ export class AppComponent {
 ```
 変更したのはクラス名を「class.fore」としてバインディングをboolean型にした点です。
 これでtrueのときはクラスを追加、falseのときは追加されないという実装を行うことができます。
+
 <img width="485" alt="スクリーンショット 2020-06-21 15 45 40" src="https://user-images.githubusercontent.com/57429437/85218526-462dc780-b3d6-11ea-91c2-60560be97c14.png">
+
 
 ### [スタイルバインディング](https://angular.jp/guide/template-syntax#%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB%E3%83%90%E3%82%A4%E3%83%B3%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0)
 
@@ -304,8 +308,11 @@ export class AppComponent {
 ```
 上記は`(click)="show()"`ユーザーがボタンをクリックしたときに`showメソッド`を呼び出しています。
 呼び出している`showメソッド`は、`msg`に新たな文字列を代入しています。これによってユーザーがボタンを押せば---がHello Worldの文字に切り替わります。
+
 <img width="69" alt="スクリーンショット 2020-06-21 17 29 02" src="https://user-images.githubusercontent.com/57429437/85220218-b4798680-b3e4-11ea-92aa-797f88eab09b.png">
+
 <img width="87" alt="スクリーンショット 2020-06-21 17 29 15" src="https://user-images.githubusercontent.com/57429437/85220222-bd6a5800-b3e4-11ea-86db-5b08c25d8525.png">
+
 これでイベントによって処理を実行することができました。
 #### イベント情報の取得
 それでは次に発火したイベントの情報を取得してみましょう。
@@ -382,6 +389,7 @@ export class AppComponent {
   }
 }
 ```
+
 <img width="141" alt="スクリーンショット 2020-06-21 20 09 02" src="https://user-images.githubusercontent.com/57429437/85223088-0f1ddd00-b3fb-11ea-9894-be734abcd3c0.png">
 
 親要素をクリックしたときには親要素のイベントのみが発火するのに対して、子要素をクリックしたときには両方のイベントが発火してしまいます。
@@ -394,7 +402,9 @@ export class AppComponent {
 ```
 子要素のイベントに対して`e.stopPropagation();`をつけてあげることで子要素のイベントが親要素に影響しないようにできます。
 これはイベントのバブリングというイベントが上へ上へと上がって行き、上位要素に影響を与えてしまう動きを止めているからです。
+
 <img width="160" alt="スクリーンショット 2020-06-21 20 13 09" src="https://user-images.githubusercontent.com/57429437/85223165-a2571280-b3fb-11ea-8ee4-05346a7334e2.png">
+
 #### テンプレート参照変数
 今まで`$event`オブジェクトを使用して全てのイベント情報を取得してきました。
 ただ要素オブジェクトを取得するために全ての情報を取得するのは処理が冗長になってしまいます。
