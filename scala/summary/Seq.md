@@ -1,17 +1,17 @@
 # Seq[T]型　まとめ
 ---
-1.[Seq型とは](#Seq型) 
-2.[Seqの要素にアクセス](#Seqの要素にアクセス) 
-3.[複数のSeqの連結](#複数のSeqの連結)
-4.[map,flatmapメソッド使い方](#mapメソッド使い方)  
-5.[match使い方](#match使い方)  
-6.[findメソッド使い方](#findメソッド使い方) 
-7.[filterメソッド使い方](#filterメソッド使い方) 
-8.[collect,collectFirstメソッド使い方](#collect,collectFirstメソッド使い方)
-9.[exists,containsメソッド使い方](#exists,containsメソッド使い方) 
-10.[foldLeft,foldRightメソッド使い方](#foldLeft,foldRightメソッド使い方) 
-11.[reduceメソッド使い方](#reduceメソッド使い方) 
-12.[参考文献](#参考文献)  
+- [Seq型とは](#Seq型)
+  - [Seqの要素にアクセス](#Seqの要素にアクセス) 
+  - [複数のSeqの連結](#複数のSeqの連結)
+  - [map,flatmapメソッド使い方](#mapメソッド使い方)
+  - [match使い方](#match使い方)  
+  - [findメソッド使い方](#findメソッド使い方) 
+  - [filterメソッド使い方](#filterメソッド使い方) 
+  - [collect,collectFirstメソッド使い方](#collect,collectFirstメソッド使い方) 
+  - [exists,containsメソッド使い方](#exists,containsメソッド使い方) 
+  - [foldLeft,foldRightメソッド使い方](#foldLeft,foldRightメソッド使い方) 
+  - [reduceメソッド使い方](#reduceメソッド使い方) 
+- [参考文献](#参考文献)  
 
 ## *Seq型とは*
 ---
@@ -542,9 +542,9 @@ scala> List(3,1,4).reduceRight(_ - _)
 res8: Int = 6
 ```
 
-reduce == リスト x1, x2, …, xn に対して f(f(…f(f(x1, x2), x3), …), xn) を求める。
-fold   == リスト x1, x2, …, xn に対して f(f(…f(f(f(e, x1), x2), x3), …), xn) を求める。eが初期値
-foldとの違いは初期値を指定していない点です。foldは初期値を指定し初期値とx1との処理をまず行ってから右に向かって処理をする。
+reduce == リスト x1, x2, …, xn に対して f(f(…f(f(x1, x2), x3), …), xn) を求める。<br>
+fold   == リスト x1, x2, …, xn に対して f(f(…f(f(f(e, x1), x2), x3), …), xn) を求める。<br>
+eが初期値foldとの違いは初期値を指定していない点です。foldは初期値を指定し初期値とx1との処理をまず行ってから右に向かって処理をする。
 しかしreduceはいきなり要素同士で処理を行うので、要素がからの場合エラーが返っていく。
 
 ## *参考文献*
