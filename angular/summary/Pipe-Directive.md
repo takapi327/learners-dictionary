@@ -6,6 +6,11 @@
 - [ディレクティブ]()
   - [コンポーネント]()
   - [構造ディレクティブ]()
+    - [ngIf]()
+    - [ngSwitch]()
+    - [ngFor]()
+    - [ngStyle]()
+      - [トラッキング式]()
   - [属性ディレクティブ]()
 - [参考文献]()
 ## [パイプ](https://angular.jp/guide/pipes#%E3%83%91%E3%82%A4%E3%83%97)
@@ -206,6 +211,205 @@ export AppComponent {
 ```
 
 #### ngSwitch
+`ngSwitch`ディレクティブは、JavaScriptでいうswitch文に該当します。指定された値に応じて表示させるコンテンツを切り替えます。
+
+```js
+@Component({
+  selector: 'my-app',
+  templete:
+    `
+      <form>
+        <select name="season" [(ngModel)]="season">
+          <option value="">四季を選択</option>
+          <option value="spring">春</option>
+          <option value="summer">夏</option>
+          <option value="autumn">秋</option>
+          <option value="winter">冬</option>
+        </select>
+      </form>
+      <div [ngSwitch]="season">
+        <span *ngSwitchCase="'spring'">春の季節です</span>
+        <span *ngSwitchCase="'summer'">夏の季節です</span>
+        <span *ngSwitchCase="'autumn'">秋の季節です</span>
+        <span *ngSwitchCase="'winter'">冬の季節です</span>
+        <span *ngSwitchDefault>選択してください</span>
+      </div>
+    `
+})
+
+export AppComponent {
+  season = '';
+}
+```
+
+上記セレクトボックスで選択した値に応じて要素を表示させる実装を行っています。<br>
+`ngIf`ディレクティブの実装と同様に双方向バインディングによって変化した値を元に表示させるものを変えています。<br>
+セレクトボックスのvalueの値が変更すると双方向バインディングによってコンポーネントに渡され、`ngSwitch`ディレクティブはコンポーネントの値を判断して`ngSwitchCase`の値と一致したものを表示させています。
+
+<img width="142" alt="スクリーンショット 2020-06-28 21 48 30" src="https://user-images.githubusercontent.com/57429437/85947991-1d36a500-b989-11ea-8a5b-94aae4e2b0d2.png">
+
+<img width="111" alt="スクリーンショット 2020-06-28 21 48 45" src="https://user-images.githubusercontent.com/57429437/85948001-258ee000-b989-11ea-82fc-5f1d83dd8219.png">
+
+#### ngFor
+`ngFor`ディレクティブは配列から要素を取り出し、ループ処理をして一覧表示を行います。
+JavaScriptのfor~ofに該当しています。
+```js
+@Component ({
+  selector: 'my-app',
+  templete:
+    `
+      <ul *ngFor="let u of users">
+        <li>ID:{{u.id}}</li>
+        <li>名前:{{u.name}}</li>
+      </ul>
+    `
+})
+export AppComponent {
+  
+  users = [
+    {
+      id: 1,
+      name: "YAMADA"
+    },
+    {
+      id: 2,
+      name: "TAKEDA"
+    },
+    {
+      id: 3,
+      name: "SATOU"
+    },
+    {
+      id: 4,
+      name: "ISIDA"
+    },
+    {
+      id: 5,
+      name: "SUZUKI"
+    }
+  ];
+}
+```
+
+上記は、コンポーネントに定義してある配列の要素を一覧表示しいている実装です。<br>
+`ngFor`ディレクティブによって配列を要素ごとに分ける処理をしています。(users配列の要素をuに格納)<br>
+要素に対して表示させたい値を指定してループ処理で一覧表示を行っています。
+
+<img width="175" alt="スクリーンショット 2020-06-28 22 07 59" src="https://user-images.githubusercontent.com/57429437/85948424-d5654d00-b98b-11ea-834d-5b15dd1e97e2.png">
+
+#### トラッキング式
+トラッキング式とは、`ngFor`によるオブジェクト追跡のためのキーを決める式です。<br>
+もしトラッキング式を使用していない`ngFor`ディレクティブの実装を行った場合、データベースから値を取得するたびに1から全て生成しなおして表示を行ってしまいます。<br>
+```js
+@Component ({
+  selector: 'my-app',
+  templete:
+    `
+      <ul *ngFor="let u of users">
+        <li>ID:{{u.id}}</li>
+        <li>名前:{{u.name}}</li>
+      </ul>
+      <input type="button" (click)="onclick()" value="更新">
+    `
+})
+export AppComponent {
+  
+  users = [
+    {
+      id: 1,
+      name: "YAMADA"
+    },
+    {
+      id: 2,
+      name: "TAKEDA"
+    },
+    {
+      id: 3,
+      name: "SATOU"
+    },
+    {
+      id: 4,
+      name: "ISIDA"
+    },
+    {
+      id: 5,
+      name: "SUZUKI"
+    }
+  ];
+
+  onclick() {
+    this.users = [
+      {
+        id: 1,
+        name: "YAMADA"
+      },
+      {
+        id: 2,
+        name: "TAKEDA"
+      },
+      {
+        id: 3,
+        name: "SATOU"
+      },
+      {
+        id: 4,
+        name: "ISIDA"
+      },
+      {
+        id: 5,
+        name: "SUZUKI"
+      },
+      {
+        id: 6,
+        name: "NAKAYAMA"
+      }
+    ];
+  }
+}
+```
+例えば上記処理では、配列に新しい値を追加/削除する実装を行ったとします。本来であれば追加された(削除された値を除いた)値のみを更新して一覧表示を行いたいのですが、トラッキング式を実装しない場合は追加/削除されたたびに全ての要素を読みとって再度生成を行ってしまいます。<br>
+これは`ngFor`ディレクティブがどこまでの値が変更されたのかの情報を取得できないからです。<br>
+トラッキング式を追加することで、現在のインデックス情報や項目情報を渡してあげることができ、この情報を元に追加された(削除された値を除いた)値に対してのみ処理を行います。
+```js
+<ul *ngFor="let u of users; trackBy: trackFn">
+  <li>ID:{{u.id}}</li>
+  <li>名前:{{u.name}}</li>
+</ul>
+
+export class AppComponet {
+  trackFn(index: any, user: any){
+    return user.id;
+  }
+}
+```
+上記のように`ngFor`ディレクティブに、コンポーネントで設定したトラッキング式を渡しています。<br>
+コンポーネントないではトラッキング式を定義して引数に現在のインデックス情報と値を渡しています。そして戻り値を渡された値のidに設定しています。これでidをキーとしてキーが既存の項目と等しい値は更新されず、新しい値のみが追加されるようになります。
+### ngStyle
+`ngStyle`ディレクティブは、スタイルバインディングが1度に１つのスタイルしか設定できなかったのに対して、複数のスタイルを設定することができるディレクティブです。
+```js
+@Component ({
+  selecter: 'my-app',
+  templete:
+    `
+      <div [ngStyle]="style">
+        <p>スタイル</p>
+      </div>
+    `
+})
+
+export class AppComponent {
+  style = {
+    backgroundColor: '#f00',
+    color:           '#fff',
+    fontWeight:      'bold'
+  };
+}
+```
+
+上記のようにスタイルをまとめて定義して実装を行うことができます。
+
+<img width="183" alt="スクリーンショット 2020-06-28 23 23 07" src="https://user-images.githubusercontent.com/57429437/85950193-54f81980-b996-11ea-969c-cf11a317c52e.png">
+
 ### 属性ディレクティブ
 ## 参考文献
 [JSONってなにもの？](https://thinkit.co.jp/article/70/1)

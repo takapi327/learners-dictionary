@@ -1,3 +1,4 @@
+<!-- ngIf -->
 <form>
   <label for="show">表示/非表示:</label>
   <input id="show" name="show" type="checkbox" [(ngModel)]="show" />
@@ -11,3 +12,34 @@
 <ng-template #elseContent>
   <p>非表示中です</p>
 </ng-template>
+
+<!-- ngSwitch -->
+<form>
+  <select name="season" [(ngModel)]="season">
+    <option value="">四季を選択</option>
+    <option value="spring">春</option>
+    <option value="summer">夏</option>
+    <option value="autumn">秋</option>
+    <option value="winter">冬</option>
+  </select>
+</form>
+<div [ngSwitch]="season">
+  <span *ngSwitchCase="'spring'">春の季節です</span>
+  <span *ngSwitchCase="'summer'">夏の季節です</span>
+  <span *ngSwitchCase="'autumn'">秋の季節です</span>
+  <span *ngSwitchCase="'winter'">冬の季節です</span>
+  <span *ngSwitchDefault>選択してください</span>
+</div>
+
+<!-- ngFor -->
+<ul *ngFor="let u of users; trackBy: trackFn">
+  <li>ID:{{u.id}}</li>
+  <li>名前:{{u.name}}</li>
+</ul>
+
+<input type="button" (click)="onclick()" value="更新">
+
+<!-- ngStyle -->
+<div [ngStyle]="style">
+  <p>スタイル</p>
+</div>
