@@ -4,7 +4,9 @@
   - [JSON形式]()
   - [date]()
 - [ディレクティブ]()
-
+  - [コンポーネント]()
+  - [構造ディレクティブ]()
+  - [属性ディレクティブ]()
 - [参考文献]()
 ## [パイプ](https://angular.jp/guide/pipes#%E3%83%91%E3%82%A4%E3%83%97)
 パイプとは、テンプレートに埋め込まれている値に対して加工/整形する処理を行います。
@@ -101,6 +103,19 @@ export class AppComponent {
 <img width="287" alt="スクリーンショット 2020-06-24 23 04 50" src="https://user-images.githubusercontent.com/57429437/85571437-1d742f00-b66f-11ea-92bc-9e88842cbf4d.png">
 
 ## [ディレクティブ](https://angular.jp/guide/attribute-directives)
+### コンポーネント
+### 構造ディレクティブ
+| 名前 |  概要  |
+| ---- | ---- |
+|  ngif  |  式の真偽によって表示/非表示を切り替える |
+|  ngSwitch  |  式の値によって表示を切り替える |
+|  ngFor  |  配列をループ処理 |
+|  ngTempleteOutlet  |  用意されたテンプレートの内容をインポート |
+|  ngComponentOutlet  |  用意されたコンポーネントの内容をインポート |
+#### ngif
+ngifディレクティブは、JavaScriptでのif文に該当しています。指定された条件式がtrueの場合にのみ要素を表示させます。
+
+### 属性ディレクティブ
 ## 参考文献
 [JSONってなにもの？](https://thinkit.co.jp/article/70/1)
 
