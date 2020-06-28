@@ -29,6 +29,7 @@
 実際に`lowercase`,`uppercase`,`titlecase`を使用してどのような動きをするのか見てみましょう。
 ```js
 @Component({
+
   selector: 'my-app', 
   template: `
     <p>元の文字列: {{name}}</p>
@@ -112,8 +113,70 @@ export class AppComponent {
 |  ngFor  |  配列をループ処理 |
 |  ngTempleteOutlet  |  用意されたテンプレートの内容をインポート |
 |  ngComponentOutlet  |  用意されたコンポーネントの内容をインポート |
-#### ngif
+#### ngIf
 ngifディレクティブは、JavaScriptでのif文に該当しています。指定された条件式がtrueの場合にのみ要素を表示させます。
+
+```js
+@Component({
+  selector: 'my-app',
+  template:
+    `
+      <form>
+        <label for="show">表示/非表示:</label>
+        <input id="show" name="show" type="checkbox" [(ngModel)]="show" />
+      </form>
+      <div *ngIf="show">
+        表示しています
+      </div>
+    `
+})
+
+export AppComponent {
+  show = false;
+}
+```
+
+上記は`templete`に表示非表示用のチェックボックスを作成して、真偽値によって切り替える実装を試しています。
+`ngModel`の双方向バインディングを設定することによって、checkboxに真偽値のためのfalseを初期値として設定しています。
+そして表示させたい要素に対して、`ngIf`を設定し、showがtrueの場合にのみ表示させるようにしています。
+
+<img width="136" alt="スクリーンショット 2020-06-28 17 23 47" src="https://user-images.githubusercontent.com/57429437/85942420-22352d80-b964-11ea-857b-e324c8e6a536.png">
+<br>
+<img width="135" alt="スクリーンショット 2020-06-28 17 24 02" src="https://user-images.githubusercontent.com/57429437/85942424-2a8d6880-b964-11ea-912b-ed6585f68acd.png">
+
+
+`ngIf`の特性は要素を表示/非表示していると説明しましたが、本当は真偽値によって要素を挿入/削除しています。<br>なぜそのような実装になっているのかというと、一般的にページ上の要素は表示/非表示に関係なく何らかのリソースを消費しています。つまり非表示の要素に対してもリソースを消費しているので、パフォーマンスが悪くなってしまう可能性があります。<br>なので`ngIf`ディレクティブでは非表示の要素を削除することによってリソースの消費を減らす働きをしています。<br>
+では非表示にする要素全てを`ngIf`ディレクティブを使用して実装すればいいという訳ではありません。<br>
+ページ上の要素によっては初期化するときに大きくリソースを消費してしまう物があるかもしれません。その実装に対しても`ngIf`ディレクティブを使用していては初期化表示するたびに大量のリソースを消費してしまう可能性がありますので、`ngIf`ディレクティブの特製が無駄なものになってしまい本末転倒です。
+その場合には、スタイルバインディングを使用て要素の表示/非表示を実装した方が結果的にリソース消費を抑えることができます。
+`ngIf`ディレクティブは、trueではなくfalseの場合にも要素を表示させておくことが可能です。
+```js
+@Component({
+  selector: 'my-app',
+  template:
+    `
+      <form>
+        <label for="show">表示/非表示:</label>
+        <input id="show" name="show" type="checkbox" [(ngModel)]="show" />
+      </form>
+      <div *ngIf="show; else elseContent">
+        表示しています
+      </div>
+      <ng-templete #elseContent>
+        <p>非表示にしています</p>
+      </ng-templete>
+    `
+})
+
+export AppComponent {
+  show = false;
+}
+```
+上記は`ngIf`ディレクティブにelseを追加してfalseの場合に呼び出すテンプレートの名前を設定しています。
+falseのときに呼び出すテンプレートには、elseで設定したテンプレート名を設定して呼びさせるようにしています。
+これでfalseのときにも下記画像のようにテンプレートを表示することができるようになりました。
+
+<img width="128" alt="スクリーンショット 2020-06-28 18 00 46" src="https://user-images.githubusercontent.com/57429437/85943182-4cd5b500-b969-11ea-80fd-67a24964a9ee.png">
 
 ### 属性ディレクティブ
 ## 参考文献

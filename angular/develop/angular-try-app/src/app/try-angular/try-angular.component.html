@@ -2,6 +2,9 @@
   <label for="show">表示/非表示:</label>
   <input id="show" name="show" type="checkbox" [(ngModel)]="show" />
 </form>
-<div *ngIf="show">
+<div *ngIf="show; else elseContent">
   表示しています
 </div>
+<ng-template #elseContent>
+  <p>非表示中です</p>
+</ng-template>
