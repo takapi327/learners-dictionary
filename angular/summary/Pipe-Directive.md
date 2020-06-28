@@ -178,6 +178,34 @@ falseのときに呼び出すテンプレートには、elseで設定したテ�
 
 <img width="128" alt="スクリーンショット 2020-06-28 18 00 46" src="https://user-images.githubusercontent.com/57429437/85943182-4cd5b500-b969-11ea-80fd-67a24964a9ee.png">
 
+またfalse時のテンプレートだけではなく、true時のテンプレートも`then~else`を使用して設定することができます。
+```js
+@Component({
+  selector: 'my-app',
+  template:
+    `
+      <form>
+        <label for="show">表示/非表示:</label>
+        <input id="show" name="show" type="checkbox" [(ngModel)]="show" />
+      </form>
+      <div *ngIf="show; then trueContent; else elseContent"></div>
+
+      <ng-templete #trueContent>
+        <p>表示しています</p>
+      </ng-templete>
+
+      <ng-templete #elseContent>
+        <p>非表示にしています</p>
+      </ng-templete>
+    `
+})
+
+export AppComponent {
+  show = false;
+}
+```
+
+#### ngSwitch
 ### 属性ディレクティブ
 ## 参考文献
 [JSONってなにもの？](https://thinkit.co.jp/article/70/1)
