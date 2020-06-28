@@ -1,1 +1,16 @@
 .DS_Store
+logs
+target
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+.metals/
+.bloop/
+ui/node_modules
+ui/dist
+.DS_store
+.metals.sbt
+/RUNNING_PID
+docker/db/data/
