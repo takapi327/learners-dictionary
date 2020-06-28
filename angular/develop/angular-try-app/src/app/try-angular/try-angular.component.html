@@ -1,0 +1,7 @@
+<form>
+  <label for="show">表示/非表示:</label>
+  <input id="show" name="show" type="checkbox" [(ngModel)]="show" />
+</form>
+<div *ngIf="show">
+  表示しています
+</div>
