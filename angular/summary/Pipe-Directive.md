@@ -481,6 +481,35 @@ export class AppComponent {
 上記で`ng-template`で囲んだテンプレートを予め定義しておく`#myTemp`と後でテンプレートとして使えるように設定しておく。
 セレクトボックスを作成し、双方向バインディングで設定した値に選択した要素のインデックスを渡し、セレクトボックスが今何番目の値を選択しているのかの情報を取得している。そしてその情報をテンプレートを呼び出すときに`users`に渡すことで配列から何番目の`users`要素を取得するかを決めている。
 
+### ngComponentOutlet
+`ngComponentOutlet`ディレクティブを使用することで予め定義しておいたコンポーネントを動的にビューにインポートできるようになります。<br>
+
+```js
+export class AppComponent implements OnInit, OnDestroy {
+  interval: any;
+  comps = [TryAngular2Component];
+  current = 0;
+  banner: any = TryAngular2Component;
+  ngOnInit() {
+    this.interval = setInterval(() => {
+      this.current = (this.current + 1) % this.comps.length;
+      this.banner = this.comps[this.current];
+    }, 3000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.interval);
+  }
+}
+```
+intervalに設定したタイマーを入れれるようにany型で設定。<br>
+compsという配列を作り順番に表示したいコンポーネントを配列として渡してあげる。<br>
+currentで現在のインデックス番号を設定、初期値を0に設定。<br>
+bannerにはインデックス番号に対応したコンポーネントを設定する。<br>
+ngOnInit内でタイマー情報を設定する。`setInterval`メソッドを使用しインデックス情報に配列の要素数と初期値を除いたもので計算を行い0〜最大インデックスの範囲で循環するように設定。<br>
+bannerにcomps配列の先ほどのインデックス情報を渡し、3000ms感覚で切り替え表示するように設定。<br>
+そしてbanner情報をビューに渡すことで画面表示を行っている。
+
 ### 属性ディレクティブ
 ## 参考文献
 [JSONってなにもの？](https://thinkit.co.jp/article/70/1)
