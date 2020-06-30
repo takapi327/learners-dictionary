@@ -43,3 +43,25 @@
 <div [ngStyle]="style">
   <p>スタイル</p>
 </div>
+
+<!-- ngTempleteOutlet -->
+<ng-template #myTemp 
+  let-id     = "id" 
+  let-name   = "name" 
+  let-gender = "gender" 
+  let-age    = "age"
+>
+  <ul>
+    <li>ID:{{id}}</li>
+    <li>名前:{{name}}</li>
+    <li>性別:{{gender}}</li>
+    <li>年齢:{{age}}</li>
+  </ul>
+</ng-template>
+
+<select name="temp" [(ngModel)]="temp">
+  <option *ngFor="let user of users; let i = index" [value]="i">
+    {{user.name}}
+  </option>
+</select>
+<ng-container *ngTemplateOutlet="myTemp; context: users[temp]"></ng-container>

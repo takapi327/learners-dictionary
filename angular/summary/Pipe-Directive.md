@@ -410,6 +410,77 @@ export class AppComponent {
 
 <img width="183" alt="スクリーンショット 2020-06-28 23 23 07" src="https://user-images.githubusercontent.com/57429437/85950193-54f81980-b996-11ea-969c-cf11a317c52e.png">
 
+### ngTempleteOutlet
+`ngTempleteOutlet`ディレクティブは、予め定義しておいたテンプレートをコンポーネント内の任意の場所に挿入できます。
+
+```js
+@Component ({
+  selecter: 'my-app',
+  templete:
+    `
+      <ng-template #myTemp 
+        let-id     = "id" 
+        let-name   = "name" 
+        let-gender = "gender" 
+        let-age    = "age"
+      >
+        <ul>
+          <li>ID:{{id}}</li>
+          <li>名前:{{name}}</li>
+          <li>性別:{{gender}}</li>
+          <li>年齢:{{age}}</li>
+        </ul>
+      </ng-template>
+      
+      <select name="temp" [(ngModel)]="temp">
+        <option *ngFor="let user of users; let i = index" [value]="i">
+          {{user.name}}
+        </option>
+      </select>
+      <ng-container *ngTemplateOutlet="myTemp; context: users[temp]"></ng-container>
+          `
+})
+
+export class AppComponent {
+  temp = 0;
+  users = [
+    {
+      id: 1,
+      name: "YAMADA",
+      gemder: "男",
+      age: 20
+    },
+    {
+      id: 2,
+      name: "TAKEDA",
+      gemder: "女",
+      age: 25
+    },
+    {
+      id: 3,
+      name: "SATOU",
+      gemder: "男",
+      age: 30
+    },
+    {
+      id: 4,
+      name: "ISIDA",
+      gemder: "女",
+      age: 22
+    },
+    {
+      id: 5,
+      name: "SUZUKI",
+      gemder: "男",
+      age: 26
+    }
+  ];
+
+}
+```
+上記で`ng-template`で囲んだテンプレートを予め定義しておく`#myTemp`と後でテンプレートとして使えるように設定しておく。
+セレクトボックスを作成し、双方向バインディングで設定した値に選択した要素のインデックスを渡し、セレクトボックスが今何番目の値を選択しているのかの情報を取得している。そしてその情報をテンプレートを呼び出すときに`users`に渡すことで配列から何番目の`users`要素を取得するかを決めている。
+
 ### 属性ディレクティブ
 ## 参考文献
 [JSONってなにもの？](https://thinkit.co.jp/article/70/1)

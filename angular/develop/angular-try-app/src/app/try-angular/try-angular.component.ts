@@ -14,23 +14,33 @@ export class TryAngularComponent implements OnInit {
   users = [
     {
       id: 1,
-      name: "YAMADA"
+      name: "YAMADA",
+      gemder: "男",
+      age: 20
     },
     {
       id: 2,
-      name: "TAKEDA"
+      name: "TAKEDA",
+      gemder: "女",
+      age: 25
     },
     {
       id: 3,
-      name: "SATOU"
+      name: "SATOU",
+      gemder: "男",
+      age: 30
     },
     {
       id: 4,
-      name: "ISIDA"
+      name: "ISIDA",
+      gemder: "女",
+      age: 22
     },
     {
       id: 5,
-      name: "SUZUKI"
+      name: "SUZUKI",
+      gemder: "男",
+      age: 26
     }
   ];
   
@@ -38,27 +48,39 @@ export class TryAngularComponent implements OnInit {
     this.users = [
       {
         id: 1,
-        name: "YAMADA"
+        name: "YAMADA",
+        gemder: "男",
+        age: 20
       },
       {
         id: 2,
-        name: "TAKEDA"
+        name: "TAKEDA",
+        gemder: "女",
+        age: 25
       },
       {
         id: 3,
-        name: "SATOU"
+        name: "SATOU",
+        gemder: "男",
+        age: 30
       },
       {
         id: 4,
-        name: "ISIDA"
+        name: "ISIDA",
+        gemder: "女",
+        age: 22
       },
       {
         id: 5,
-        name: "SUZUKI"
+        name: "SUZUKI",
+        gemder: "男",
+        age: 26
       },
       {
         id: 6,
-        name: "NAKAYAMA"
+        name: "NAKAYAMA",
+        gemder: "女",
+        age: 18
       }
     ];
   }
@@ -72,6 +94,8 @@ export class TryAngularComponent implements OnInit {
     color:           '#fff',
     fontWeight:      'bold'
   };
+
+  temp = 0;
 
   constructor() { }
 
