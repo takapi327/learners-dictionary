@@ -183,4 +183,33 @@ constructor(private builder: FormBuilder) { }
   });
 ```
 
+### フォームの状態検知
+上記のようにフォームの検証を行うためには、フォームの状態を検知しておく必要があります。
+```js
+<span *ngIf="name.errors?.required">
+  名前は必須項目です
+</span>
+```
+上記で使用しているように、`入力要素名.errors?.検証型`として入力要素名の状態が今どうなっているかを検知することができます。検証型はValidatorsクラスで紹介したものと同じ物が使用できます。<br>
+検証型にかかわらず、フォームの入力値が正しいかどうかを検証することもできる。
+```js
+入力要素.valid    // 入力が正しいか
+入力要素.invalid  // エラーがあるか
+```
+上記はそれぞれの検証要素によってtrue/falseを返します。
+```js
+  <div class="form-field__submit">
+    <input type="submit" value="登録" [disabled]="myForm.invalid" />
+  </div>
+```
+フォームのsubmitボタンでdisabledと合わせて使うことで、フォーム全体で入力が正しいときにのみボタンが押せないように設定を行うことができる。<br>
+他にも入力有無(入力されたかどうか)の状態も検知することができます。
+```js
+フォーム.pristine  // フォームが変更されていない(未入力)
+フォーム.dirty     // フォームが変更された(入力)
+フォーム.touched   // フォームにフォーカスが当たった
+フォーム.untouched // フォームがフォーカスが当たっていない
+```
 ## 参考文献
+
+[disabled](http://www.osaka-kyoiku.ac.jp/~joho/html5_ref/disabled_attr.php?menutype=2simpll01l02l03A0)
