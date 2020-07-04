@@ -1,1 +1,41 @@
-<p>form works!</p>
+<form [formGroup]="myForm" (ngSubmit)="show()" class="form-field">
+  <div class="form-field__name">
+    <label for="name">名前</label>
+    <input id="name" name="name" type="text" [formControl]="name" />
+    <span *ngIf="name.errors?.required">
+      名前は必須項目です
+    </span>
+    <span *ngIf="name.errors?.minlength">
+      名前は3文字以上で入力してください
+    </span>
+    <span *ngIf="name.errors?.maxlength">
+      名前は10文字以内で入力してください
+    </span>
+  </div>
+
+  <div class="form-field__mail">
+    <label for="mail">メールアドレス</label>
+    <input id="mail" name="mail" type="email" [formControl]="mail" />
+    <span *ngIf="mail.errors?.required">
+      名前は必須項目です
+    </span>
+    <span *ngIf="mail.errors?.email">
+      メールアドレスは正しい形式で入力してください
+    </span>
+  </div>
+
+  <div class="form-field__pass">
+    <label for="pass">パスワード</label>
+    <input id="pass" name="pass" type="password" [formControl]="pass" />
+    <span *ngIf="pass.errors?.required">
+      パスワードは必須項目です
+    </span>
+    <span *ngIf="mail.errors?.minlength">
+      パスワードは8文字以上入力してください
+    </span>
+  </div>
+
+  <div class="form-field__submit">
+    <input type="submit" value="登録" [disabled]="myForm.invalid" />
+  </div>
+</form>
