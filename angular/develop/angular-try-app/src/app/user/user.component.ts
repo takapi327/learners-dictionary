@@ -14,31 +14,31 @@ export class UserComponent implements OnInit {
     {
       id: 1,
       name: "YAMADA",
-      gemder: "男",
+      gender: "男",
       age: 20
     },
     {
       id: 2,
       name: "TAKEDA",
-      gemder: "女",
+      gender: "女",
       age: 25
     },
     {
       id: 3,
       name: "SATOU",
-      gemder: "男",
+      gender: "男",
       age: 30
     },
     {
       id: 4,
       name: "ISIDA",
-      gemder: "女",
+      gender: "女",
       age: 22
     },
     {
       id: 5,
       name: "SUZUKI",
-      gemder: "男",
+      gender: "男",
       age: 26
     }
   ];
