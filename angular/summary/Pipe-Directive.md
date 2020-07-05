@@ -1,4 +1,4 @@
-# Angular
+# Pipe-Directive
 ## 目次
 - [パイプ]()
   - [JSON形式]()

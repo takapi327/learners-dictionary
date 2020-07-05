@@ -1,4 +1,5 @@
-# Angular
+# Databinding
+
 ## 目次
 - [データバインディング]()
   - [Interpolation(補間)]()
