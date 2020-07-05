@@ -65,3 +65,10 @@
   </option>
 </select>
 <ng-container *ngTemplateOutlet="myTemp; context: users[temp]"></ng-container>
+
+<div>
+  <span *ngFor="let u of users">
+    [<a href="#" (click)="onclick(u)">{{u.name}}</a>]
+  </span>
+  <detail-user [user]="selected"></detail-user>
+</div>

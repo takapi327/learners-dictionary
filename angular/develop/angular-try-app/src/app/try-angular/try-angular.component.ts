@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../user';
 
 @Component({
   selector: 'app-try-angular',
@@ -10,6 +11,8 @@ export class TryAngularComponent implements OnInit {
   show = false;
 
   season = '';
+
+  selected: User;
 
   users = [
     {
@@ -96,6 +99,10 @@ export class TryAngularComponent implements OnInit {
   };
 
   temp = 0;
+
+  onclick(user: User){
+    this.selected = user;
+  }
 
   constructor() { }
 

@@ -11,13 +11,15 @@ import { AppComponent }         from './app.component';
 import { TryAngularComponent }  from './try-angular/try-angular.component';
 import { TryAngular2Component } from './try-angular2/try-angular2.component';
 import { FormComponent }        from './form/form.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TryAngularComponent,
     TryAngular2Component,
-    FormComponent
+    FormComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
