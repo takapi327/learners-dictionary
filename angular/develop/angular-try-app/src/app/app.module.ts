@@ -12,6 +12,7 @@ import { TryAngularComponent }  from './try-angular/try-angular.component';
 import { TryAngular2Component } from './try-angular2/try-angular2.component';
 import { FormComponent }        from './form/form.component';
 import { UserComponent } from './user/user.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { UserComponent } from './user/user.component';
     TryAngularComponent,
     TryAngular2Component,
     FormComponent,
-    UserComponent
+    UserComponent,
+    UserDetailComponent
   ],
   imports: [
     BrowserModule,
