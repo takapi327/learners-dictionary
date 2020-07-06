@@ -11,9 +11,7 @@ import { AppComponent }         from './app.component';
 import { TryAngularComponent }  from './try-angular/try-angular.component';
 import { TryAngular2Component } from './try-angular2/try-angular2.component';
 import { FormComponent }        from './form/form.component';
-import { UserComponent } from './user/user.component';
-import { UserDetailComponent } from './user-detail/user-detail.component';
-import { UserEditComponent } from './user-edit/user-edit.component';
+import { CoopModule }           from '../app/coop/coop.module';
 
 @NgModule({
   declarations: [
@@ -21,15 +19,13 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     TryAngularComponent,
     TryAngular2Component,
     FormComponent,
-    UserComponent,
-    UserDetailComponent,
-    UserEditComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoopModule
   ],
   providers: [],
   bootstrap: [AppComponent]
