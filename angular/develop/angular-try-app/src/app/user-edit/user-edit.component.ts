@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { User } from '../user';
 
 @Component({
   selector: 'app-user-edit',
@@ -6,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-edit.component.scss']
 })
 export class UserEditComponent implements OnInit {
+
+  @Input() user: User;
+  @Output() edited = new EventEmitter<User>();
+
+  onsubmit() {
+    this.edited.emit(this.user);
+  }
 
   constructor() { }
 

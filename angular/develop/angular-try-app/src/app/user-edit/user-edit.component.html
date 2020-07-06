@@ -1,1 +1,25 @@
-<p>user-edit works!</p>
+<form #myForm="ngForm" (ngSubmit)="onsubmit()" *ngIf="user">
+  <div>
+    <label for="id">ID:</label>
+    <span id="id">{{user.id}}</span>
+  </div>
+
+  <div>
+    <label for="name">名前:</label>
+    <input id="name" name="name" size="8" type="text" [(ngModel)]="user.name" />
+  </div>
+
+  <div>
+    <label for="gender">性別:</label>
+    <input id="gender" name="gender" size="1" type="text" [(ngModel)]="user.gender" />
+  </div>
+
+  <div>
+    <label for="age">年齢:</label>
+    <input id="age" name="age" size="3" type="text" [(ngModel)]="user.age" />
+  </div>
+
+  <div>
+    <input type="submit" value="編集" /> 
+  </div>
+</form>

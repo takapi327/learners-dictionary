@@ -2,6 +2,6 @@
   <span *ngFor="let u of users">
     [<a href="#" (click)="onclick(u)">{{u.name}}</a>]
   </span>
-  <app-user-detail [user]="selected"></app-user-detail>
+  <app-user-edit [user]="selected" (edited)="onedited($event)"></app-user-edit>
 </div>
 

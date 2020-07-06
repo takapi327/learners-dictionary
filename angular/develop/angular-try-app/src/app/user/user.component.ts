@@ -47,6 +47,17 @@ export class UserComponent implements OnInit {
     this.selected = user;
   }
 
+  onedited(user: User) {
+    for(let u of this.users){
+      if(u.id === user.id){
+        u.name   = user.name;
+        u.gender = user.gender;
+        u.age    = user.age;
+      }
+    }
+    this.selected = null;
+  }
+
   constructor() { }
 
   ngOnInit(): void {
