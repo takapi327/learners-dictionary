@@ -13,6 +13,7 @@ import { TryAngular2Component } from './try-angular2/try-angular2.component';
 import { FormComponent }        from './form/form.component';
 import { UserComponent } from './user/user.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
     TryAngular2Component,
     FormComponent,
     UserComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,
