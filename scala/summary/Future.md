@@ -41,7 +41,9 @@ ExecutionContextとは簡単に説明するといい感じに非同期に実行�
 `scala.concurrent.ExecutionContext.Implicits.global` は scalaが標準で提供しているExecutionContextだと思えば良い。
 
 ExecutionContextの処理を画像でみてみるとわかりやすい。
+
 <img width="385" alt="スクリーンショット 2020-05-14 15 06 42" src="https://user-images.githubusercontent.com/57429437/81898909-95712300-95f4-11ea-8419-ea128c1b3cec.png">
+
 > 例えば10個の重いタスクがあったとして、それぞれのタスクに対し new Thread & start (スレッド立ち上げ) して処理した場合は当然次のように10個のスレッドが立ち上がる。
 > しかし、この実装は以下のような問題点がある
 >
@@ -49,6 +51,7 @@ ExecutionContextの処理を画像でみてみるとわかりやすい。
 > ・しかも暇しているスレッドがいる
 
 <img width="307" alt="スクリーンショット 2020-05-14 15 06 54" src="https://user-images.githubusercontent.com/57429437/81899166-2b0cb280-95f5-11ea-97f7-f2cb0d1f8bb3.png">
+
 > このようにタスク(Runnableといったほうが適切か)を「いい感じ((ExecutionContextの実装による)」にスレッドに分配するのがExecutionContextの役目だ。
 > 一般には「一定数を最大数とするスレッドプールを持っており、空いてるスレッドを利用してRunnableを処理してくれる」と考えればいいのではないだろうか。
 
