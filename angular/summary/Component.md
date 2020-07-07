@@ -183,7 +183,34 @@ export class UserEditComponent implements OnInit {
 <img width="403" alt="スクリーンショット 2020-07-06 23 35 15" src="https://user-images.githubusercontent.com/57429437/86605208-5a321580-bfe1-11ea-8687-65b5480d8ac9.png">
 
 ### [ライフサイクルメソッド](https://angular.jp/guide/lifecycle-hooks#hooking-into-the-component-lifecycle)
-#### ngOnInit/ngOnDestriy
+コンポーネントには、プロパティ、子コンポーネントの変化を受けて状態を変化させていき、コンポーネントの生成直後から破棄されるまでの流れをライフサイクルといいます。
+コンポーネントにはこのライフサイクルの変化、つまりコンポーネントの状態の変化によって実行される ライフサイクルメソッドが存在ししており下記のような種類があります。
+
+|ライフサイクルメソッド|実行時|
+|---|---|
+|ngOnChanges|@Input 経由で入力値が設定されたときに実行される|
+|ngOnInit|コンポーネントの初期化時に実行される|
+|ngDoCheck|コンポーネントの状態が変わったことを検知したら実行される|
+|ngAfterContentInit|外部コンテンツを初期化したときに実行される	|
+|ngAfterContentChecked|外部コンテンツの変更を検知したときに実行される|
+|ngAfterViewInit|自分自身と子コンポーネントのビューの初期化時に実行される|
+|ngAfterViewChecked|自分自身と子コンポーネントのビューが変更されたときに実行される|
+|ngOnDestroy|	コンポーネントが破棄されるときに実行される|
+
+上記のライフサイクルメソッドを順番に確認していきます。
+
+#### ngOnInit/ngOnDestroy
+##### ページの初期化を行うngOnInit
+ngOnInitはコンポーネントの初期化処理を行うライフサイクルメソッドです。
+constructor -> ngOnChanges のあとに実行された後に1度だけ実行されます。
+
+>constructor では早すぎるため、ngOnChanges か ngOnInit で行う必要がある
+だが ngOnChanges だと値が変更されると毎回実行されてしまうため初期処理にはそぐわない
+したがって、当該プロパティに関連する初期処理は ngOnInit で行う
+
+##### コンポーネントで利用したリソースの後始末に利用するngOnDestroy
+>ngOnDestroy() では Angular がディレクティブを破壊する前に、メモリリークのリスクを回避するための処理、例えば Observables から subscribe を解除したり DOM イベントの解放、interval timers の停止、ディレクティブに登録されたコールバック処理の解除といったクリーンアップを実装する。
+
 #### ngOnChanges
 #### ngAfterViewInit/ngAfterViewChecked
 #### ng-content
