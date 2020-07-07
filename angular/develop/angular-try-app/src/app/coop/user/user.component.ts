@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { User } from '../user';
 
 @Component({
@@ -6,7 +6,7 @@ import { User } from '../user';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnChanges {
 
   selected: User;
   
@@ -59,6 +59,10 @@ export class UserComponent implements OnInit {
   }
 
   constructor() { }
+
+  ngOnChanges() {
+    console.log('ngOnChanges');
+  };
 
   ngOnInit(): void {
   }
