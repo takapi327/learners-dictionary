@@ -110,13 +110,6 @@ toMapメソッドは、タプル2つのSeqからMapに変換する。要はSeq�
 scala> List((1,2),(3,4)).toMap
 res10: scala.collection.immutable.Map[Int,Int] = Map(1 -> 2, 3 -> 4)
 ```
-### 実装例
-https://github.com/takapi327/education-app/blob/master/app/controllers/Todo.scala#L45
-```scala
-// SeqをtoMapを使いMapに変換している。
-val caMap = caSeq.map(ca => ca.id -> ca).toMap
-```
-上記の動きとしてはcategoryを前件取得したSeqに対して、mapを使いSeqを一旦無視して値に直接処理を行えるようにしている。そして->で囲むことによってキーと値を指定してMapを作成している。
 
 ## *groupByメソッド使い方*
 ---
@@ -162,6 +155,79 @@ def toMap[T, U](implicit ev: A <:< (T, U)): immutable.Map[T, U] = {
 }
 ```
 
+### 実装例
+```scala
+object User extends App {
+
+  // Userの型
+  case class User(
+    id:   Option[Int],
+    name: String
+  )
+  
+  // Todoの型
+  case class Todo(
+    uid:  Int,
+    todo: String,
+  )
+
+    // User情報の配列を作成
+    val seqUser = Seq(
+      User(Some(1), "田中"),
+      User(Some(2), "山田"),
+      User(Some(3), "佐々木"),
+      User(Some(4), "石田"),
+      User(Some(5), "鈴木")
+    )
+
+    // Todo情報の配列を作成
+    val seqTodo = Seq(
+      Todo(1, "勉強"),
+      Todo(1, "遊び"),
+      Todo(1, "食事"),
+      Todo(2, "勉強"),
+      Todo(3, "遊び"),
+      Todo(4, "学校"),
+      Todo(4, "遊び"),
+      Todo(2, "遊び"),
+      Todo(5, "食事"),
+      Todo(5, "勉強"),
+      Todo(3, "勉強")
+    )
+
+    // toMapメソッドを使用してTodoの配列をuidをキーとしてMap型に変換
+    val mapTodo     = seqTodo.map(v => v.uid -> v).toMap
+
+    // User情報とTodoの情報をIdで紐付ける
+    val userTodo    = seqUser.map(u =>
+        u.id match {
+          case Some(uid) => (u, mapTodo.get(uid))
+          case None      => (u, None)
+        } 
+    )
+
+    // 上記と同じ処理
+    val groupByTodo = seqTodo.groupBy(_.uid)
+    val userTodo2   = seqUser.map(u =>
+        u.id match {
+          case Some(uid) => (u, groupByTodo.get(uid))
+          case None      => (u, None)
+        } 
+    )
+
+    println(groupByTodo)
+    println("-----------------")
+    println(mapTodo)
+    println("-----------------")
+    println(userTodo)
+    println("-----------------")
+    println(userTodo2)
+    println("-----------------")
+}
+```
+
+上記は引く数のUserとそのUserが所有しているTodoの一覧を紐付ける処理を行っています。
+まず配列と配列をお互いの持っている値を紐付けて、1つの配列にしたいとします。
 ## 参考文献
 ---
 [Scala Map](https://www.ne.jp/asahi/hishidama/home/tech/scala/collection/map.html)
