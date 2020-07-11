@@ -196,10 +196,10 @@ object User extends App {
     )
 
     // toMapメソッドを使用してTodoの配列をuidをキーとしてMap型に変換
-    val mapTodo     = seqTodo.map(v => v.uid -> v).toMap
+    val mapTodo = seqTodo.map(v => v.uid -> v).toMap
 
     // User情報とTodoの情報をIdで紐付ける
-    val userTodo    = seqUser.map(u =>
+    val userTodo = seqUser.map(u =>
         u.id match {
           case Some(uid) => (u, mapTodo.get(uid))
           case None      => (u, None)
@@ -228,6 +228,65 @@ object User extends App {
 
 上記は引く数のUserとそのUserが所有しているTodoの一覧を紐付ける処理を行っています。
 まず配列と配列をお互いの持っている値を紐付けて、1つの配列にしたいとします。
+UserのIdの値とTodoのuidの値が同じものが、そのUserが持っているTodoとわかるように設定していきます。
+まずcase classに関しては、後ほど勉強して行くと思うので、今回はUserやTodoの入れ物を作るぐらいの感覚で大丈夫です。
+```scala
+val mapTodo = seqTodo.map(v => v.uid -> v).toMap
+```
+それではまずSeqの配列をマップ型に変更するtoMapメソッドを使っていきます。
+Map型はキーと値を保持する配列でしたね。今回はTodoをuidをキーとして取り出したりできるようにしたいので、まずmapメソッドを使用してuidとそれに紐づく値を2つ持ったSeq[(Int, Todo)]に型を変換します。
+REPLで確認してみると下記のようになるはずです。
+(case classとかもREPLで設定する必要があります)
+```
+scala> val mapTodo = seqTodo.map(v => v.uid -> v)
+mapTodo: Seq[(Int, Todo)] = List((1,Todo(1,勉強)), (1,Todo(1,遊び)), (1,Todo(1,食事)), (2,Todo(2,勉強)), (3,Todo(3,遊び)), (4,Todo(4,学校)), (4,Todo(4,遊び)), (2,Todo(2,遊び)), (5,Todo(5,食事)), (5,Todo(5,勉強)), (3,Todo(3,勉強)))
+```
+これに対してtoMapメソッドを使用すると下記のようになります。
+```scala
+scala> mapTodo.toMap
+res1: scala.collection.immutable.Map[Int,Todo] = Map(5 -> Todo(5,勉強), 1 -> Todo(1,食事), 2 -> Todo(2,遊び), 3 -> Todo(3,勉強), 4 -> Todo(4,遊び))
+```
+ではこの作成したTodoのMap型配列とUserの配列を結び付けていきます。
+
+```
+val userTodo = seqUser.map(u =>
+  u.id match {
+    case Some(uid) => (u, mapTodo.get(uid))
+    case None      => (u, None)
+  } 
+)
+```
+上記をREPLで実行すると下記のようになります。
+```
+userTodo: Seq[(User, Option[Todo])] = List((User(Some(1),田中),Some(Todo(1,食事))), (User(Some(2),山田),Some(Todo(2,遊び))), (User(Some(3),佐々木),Some(Todo(3,勉強))), (User(Some(4),石田),Some(Todo(4,遊び))), (User(Some(5),鈴木),Some(Todo(5,勉強))))
+```
+今回行った処理は、Userの配列をmapメソッドを使用して個別加工しUserにIdが存在したらmatch文で条件分岐を行っています。
+match文も後ほど学習すると思います。今回はIf文みたいな感じと思っていてください。
+条件分岐でIdがあった場合には、mapで切り出したUser情報と先ほど作ったMap型のTodoをgetを使いuidと同じキー値を取得しています。
+そしてmapは個別加工しているだけなので、戻り値はSeq[(User, Option[Todo])]型とSeqになって返されます。
+ちなみにgetを使わなくても取得は出来ますので、色々試して見てください。
+
+次は同じ処理をgroupByメソッドを使って実装した場合を見てみます。
+```
+scala> val groupByTodo = seqTodo.groupBy(_.uid)
+groupByTodo: scala.collection.immutable.Map[Int,Seq[Todo]] = Map(5 -> List(Todo(5,食事), Todo(5,勉強)), 1 -> List(Todo(1,勉強), Todo(1,遊び), Todo(1,食事)), 2 -> List(Todo(2,勉強), Todo(2,遊び)), 3 -> List(Todo(3,遊び), Todo(3,勉強)), 4 -> List(Todo(4,学校), Todo(4,遊び)))
+```
+groupByメソッドだとキーに対応した配列の値が返されています。
+この配列を同じようにUserと結びつけると下記のようになります。
+```
+val userTodo2   = seqUser.map(u =>
+  u.id match {
+    case Some(uid) => (u, groupByTodo.get(uid))
+    case None      => (u, None)
+  } 
+)
+
+userTodo2: Seq[(User, Option[Seq[Todo]])] = List((User(Some(1),田中),Some(List(Todo(1,勉強), Todo(1,遊び), Todo(1,食事)))), (User(Some(2),山田),Some(List(Todo(2,勉強), Todo(2,遊び)))), (User(Some(3),佐々木),Some(List(Todo(3,遊び), Todo(3,勉強)))), (User(Some(4),石田),Some(List(Todo(4,学校), Todo(4,遊び)))), (User(Some(5),鈴木),Some(List(Todo(5,食事), Todo(5,勉強)))))
+```
+先ほどのtoMapと違って該当するものを全てを取得できているはずです。
+まあこんな感じで使ったりします。
+この実装自体改善点がたくさんあるので、自分で改造して試してみると良いかもしれません。
+
 ## 参考文献
 ---
 [Scala Map](https://www.ne.jp/asahi/hishidama/home/tech/scala/collection/map.html)
