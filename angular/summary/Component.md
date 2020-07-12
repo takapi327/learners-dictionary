@@ -212,6 +212,10 @@ constructor -> ngOnChanges のあとに実行された後に1度だけ実行さ�
 >ngOnDestroy() では Angular がディレクティブを破壊する前に、メモリリークのリスクを回避するための処理、例えば Observables から subscribe を解除したり DOM イベントの解放、interval timers の停止、ディレクティブに登録されたコールバック処理の解除といったクリーンアップを実装する。
 
 #### ngOnChanges
+ngOnChangesは、入力プロパティを変更するたびに呼び出されるメソッドです。<br>
+つまり子コンポーネントで@Inputデコレータで修飾されたプロパティが、親コンポーネントで変更されるたびに実行されます。
+ngOnChangesメソッドは現在のプロパティ値と変更前のプロパティ値の両方にアクセスできるように、SimpleChangesオブジェクトを引数に受け取ります。
+
 #### ngAfterViewInit/ngAfterViewChecked
 #### ng-content
 #### ngAfterContentInit/ngAfterContentChecked
