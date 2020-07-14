@@ -10,6 +10,20 @@ object June28th extends App {
     todo: String,
   )
 
+  case class UserTodo(
+    id:   Option[Int],
+    name: String,
+    uid:  Int,
+    todo: String,
+    address: String,
+    tel:     Int
+  )
+
+  case class UserDetail(
+    address: String,
+    tel:     Int
+  )
+
 
     val seqUser = Seq(
       User(Some(1), "田中"),
@@ -31,6 +45,15 @@ object June28th extends App {
       Todo(5, "食事"),
       Todo(5, "勉強"),
       Todo(3, "勉強")
+    )
+
+    val seqDetail = Seq(
+      UserDetail("兵庫県", 9),
+      UserDetail("大阪府", 4),
+      UserDetail("東京都", 3),
+      UserDetail("京都府", 4),
+      UserDetail("北海道", 5),
+      UserDetail("福岡県", 6)
     )
 
     val mapTodo     = seqTodo.map(v => v.uid -> v).toMap
@@ -57,5 +80,25 @@ object June28th extends App {
     println("-----------------")
     println(userTodo2)
     println("-----------------")
+
+    val u = for{
+      user   <- seqUser
+      todo   <- seqTodo
+      detail <- seqDetail
+    } yield {
+      if(user.id.get == todo.uid){
+        UserTodo(
+          user.id,
+          user.name,
+          todo.uid,
+          todo.todo,
+          detail.address,
+          detail.tel
+        )
+      }
+    }
+    val v = seqUser ++ seqTodo ++ seqDetail
+    println(u.filterNot(_ == Nil))
+    //println(v)
 }
 
