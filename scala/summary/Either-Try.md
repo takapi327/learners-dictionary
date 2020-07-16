@@ -200,21 +200,28 @@ res50: Any = "error"
 def cond[A, B](test: Boolean, right: => B, left: => A): Either[A, B] =
   if (test) Right(right) else Left(left)
 ```
-
+Eitherのcondメソッドは、定義元でmatch式の条件分岐を行っています。
+Booleanで条件分岐を行いRightに渡した値をTrueの場合に返し、Leftに渡した値をFalseの時に返すメソッドです。
 #### 実装例
-match式を使用して地道に実装
+下記はUserの認証機能でViewにUser情報を返すまでの処理を行っています。
+(※下記の実装はUser情報、Userのパスワード、UserのTokenを別テーブルに分けているので複雑になっています)
+match式を使用して地道に実装した場合
 ```scala
 def index() = Action.async {implicit request =>
+  // CookieからTokenを取得
   val userToken = request.cookies.get("user").map(_.value)
   for {
+    // Tokenを使いTokenテーブルの値を取得
     getUserId <- userToken match {
       case Some(token) => authRepo.filterByToken(token)
       case None        => Future(None)
     }
+    // Tokenテーブルの値からUserIdを取得
     userId = getUserId match {
       case Some(user) => user.userId
       case None       => None
     }
+    // UserIdでUser情報を取得
     userDetail <- userId match {
       case Some(uid) => userRepo.filterById(uid)
       case None      => Future(None)
@@ -231,10 +238,13 @@ def index() = Action.async {implicit request =>
 Either.condを使用
 ```scala
 def index() = Action.async {implicit request =>
+  // CookieからTokenを取得
   val userToken = request.cookies.get("user").map(_.value)
-  val eitherU = Either.cond(userToken.isDefined, authRepo.filterByToken(userToken.get), Future(None))
+  // 条件分岐でTokenテーブルの値を取得
+  val eitherU   = Either.cond(userToken.isDefined, authRepo.filterByToken(userToken.get), Future(None))
 
   for {
+    // UserIdを取得
     userId <- eitherU match {
       case Right(user) => userRepo.filterById(user.get.userId.getOrElse(0L))
       case Left(_)     => Future(None)
@@ -247,6 +257,9 @@ def index() = Action.async {implicit request =>
   }
 }
 ```
+記述量が半分ぐらいになりました！
+上記の処理も記述的によろしくない箇所とかもっと良い方法がありますので、色々試して見てください。
+
 ## [Try](https://github.com/scala/scala/blob/2.13.x/src/library/scala/util/Try.scala)
 ---
 
