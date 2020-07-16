@@ -195,7 +195,58 @@ scala> either.fold(
     |  )
 res50: Any = "error"
 ```
+### [cond](https://github.com/scala/scala/blob/v2.13.3/src/library/scala/util/Either.scala#L499)
+```scala
+def cond[A, B](test: Boolean, right: => B, left: => A): Either[A, B] =
+  if (test) Right(right) else Left(left)
+```
 
+#### 実装例
+match式を使用して地道に実装
+```scala
+def index() = Action.async {implicit request =>
+  val userToken = request.cookies.get("user").map(_.value)
+  for {
+    getUserId <- userToken match {
+      case Some(token) => authRepo.filterByToken(token)
+      case None        => Future(None)
+    }
+    userId = getUserId match {
+      case Some(user) => user.userId
+      case None       => None
+    }
+    userDetail <- userId match {
+      case Some(uid) => userRepo.filterById(uid)
+      case None      => Future(None)
+    }
+  } yield {
+    userDetail match {
+      case Some(u) => Ok(views.html.site.user.List(ViewValueUserList(user = Some(u))))
+      case None    => NotFound(views.html.site.index(new ViewValueHome))
+    }
+  }
+}
+```
+
+Either.condを使用
+```scala
+def index() = Action.async {implicit request =>
+  val userToken = request.cookies.get("user").map(_.value)
+  val eitherU = Either.cond(userToken.isDefined, authRepo.filterByToken(userToken.get), Future(None))
+
+  for {
+    userId <- eitherU match {
+      case Right(user) => userRepo.filterById(user.get.userId.getOrElse(0L))
+      case Left(_)     => Future(None)
+    }
+  } yield {
+    userId match {
+      case Some(u) => Ok(views.html.site.user.List(ViewValueUserList(user = Some(u))))
+      case None    => NotFound(views.html.site.index(new ViewValueHome))
+    }
+  }
+}
+```
 ## [Try](https://github.com/scala/scala/blob/2.13.x/src/library/scala/util/Try.scala)
 ---
 
