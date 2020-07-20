@@ -6,7 +6,7 @@
     - [Futureとは](#Futureとは)
         - [概要](#概要)
         - [Future](#Future)
-        - [インスタンス](#インスタンス)
+        - [例]()
     - [ExcecutionContext](#ExcecutionContext)
         - [実装例](#実装例)
     - [Futureメソッドの種類](#Futureメソッドの種類)
@@ -36,9 +36,22 @@ Future は概要で述べたとおり、ある時点において利用可能と�
 
 Futureを使う方法は、`scala.concurrent`のパッケージをimportすれば使えるようになる。
 
+### 例
+わかりにくい非同期処理を現実に例えて少しでもわかりやすく解説してみる。
+```
+Q. 非同期処理とは？
+
+A. 1つの作業を行いながら並行して別の作業を行うこと
+```
+例えば..
+非同期で作業を行わない店員と非同期で作業する店員を比べてみる。
+あるランチタイムのコンビニでレジの店員が非同期でない店員だった場合、どんなに列ができていてもあるお客様がお弁当を温めますと言うとそのお弁当が温め終わるまで、他の作業をしません。5分10分かかる温めでも温め終わるまで何もしません。これではいつまでたってもおわらないですよね。
+逆にこれが非同期作業を行う店員の場合は、お弁当の温めを始めても別のお客様のお会計を行いつつ温めが終わればお弁当を渡してくれます。
+完璧かと言われれば全然だがざっくりとしたイメージはこんな感じです。
+
 ## ExcecutionContext
 ExecutionContextとは簡単に説明するといい感じに非同期に実行してくれる仕組みであり、ExecutionContextの[executeメソッド](https://github.com/scala/scala/blob/2.12.x/src/library/scala/concurrent/ExecutionContext.scala#L78)は、Runnableを受け取り適当なタイミング(ExecutionContextの実装)によって実行を行う。
-`scala.concurrent.ExecutionContext.Implicits.global` は scalaが標準で提供しているExecutionContextだと思えば良い。
+`scala.concurrent.ExecutionContext.Implicits.global` は scalaが標準で提供しているExecutionContextだと思えば良い。※非推奨
 
 ExecutionContextの処理を画像でみてみるとわかりやすい。
 
@@ -56,21 +69,20 @@ ExecutionContextの処理を画像でみてみるとわかりやすい。
 > 一般には「一定数を最大数とするスレッドプールを持っており、空いてるスレッドを利用してRunnableを処理してくれる」と考えればいいのではないだろうか。
 
 ### 実装例
-[ExecutionContext実装例](https://github.com/takapi327/scala-play-app/blob/feature/2020-05-SPA-004-Create-User-Controller/app/controllers/User.scala#L21)
+[ExecutionContext実装例](https://github.com/takapi327/scala-play-app/blob/feature/2020-06-SPA-010-Create-ActionBuilder/app/controllers/User.scala#L29)
 
 下記はコントローラーの処理を記述している箇所であり、`implicit ec: ExecutionContext`が定義されている。
 簡単に説明をすると、これはScalaで非同期に処理を実行するための機能を暗黙的に個々のメソッドに渡すような処理をしています。
 定義をして直接使用はしませんが、Repositoryのメソッド内で実行される処理の内部で必要となってくる。
 
 ```scala
-// アプリ名/app//controllers/コントローラー名
 // Contorollerでの処理
+@Singleton
 class UserController @Inject()(
-  userRepo: UserRepository,
   cc: MessagesControllerComponents
-)(implicit ec: ExecutionContext) 
+)(implicit ec: ExecutionContext) <- ココ
   extends MessagesAbstractController(cc){
-// この記述があっている保証もないしもっと良い定義の方法があるかもしれない...
+
 ```
 
 この記述を行うことで暗黙的なExecutionContextを得るために何も考えず、`scala.concurrent.ExecutionContext.Implicits.global`をimportするということがなくなる。
@@ -269,10 +281,10 @@ Future(Success(88))
 
 ```scala
 scala> for {
-     |   x <- Future { Thread.sleep(10000); 21 + 21 }
-     |   y <- Future { Thread.sleep(10000); 23 + 23 }
+     |   x <- Future { Thread.sleep(10000); 21 + 21 }  <- ココが終われば次 (10s)
+     |   y <- Future { Thread.sleep(10000); 23 + 23 }  <- ココが終われば次 (10s)
      | } yield {
-     |   x + y
+     |   x + y <- 20s後に処理
      | }
 res35: scala.concurrent.Future[Int] = Future(<not completed>)
 
