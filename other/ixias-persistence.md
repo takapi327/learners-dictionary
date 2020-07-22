@@ -295,3 +295,4 @@ package object persistence {
 [今さら聞けないIT用語：やたらと耳にするけど「API」って何？](https://data.wingarc.com/what-is-api-16084)<br>
 [Best Practices for Using Slick on Production](https://blog.knoldus.com/best-practices-for-using-slick-on-production/)<br>
 [Future や ExecutionContext をなんとなく触ってる人のために](https://qiita.com/takat0-h0rikosh1/items/b42cd4dd4ca0fc6770fa)<br>
+[自分型](https://docs.scala-lang.org/ja/tour/self-types.html)<br>
