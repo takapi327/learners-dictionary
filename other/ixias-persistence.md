@@ -36,6 +36,7 @@ ixias.modelパッケージに関しては、第1弾として20新卒の久代(�
       - [SlickRunDBAction]()
       - [application.conf]()
   - [SlickResourceProvider]()
+- [まとめ]()
 - [参考文献]()
 
 ### サンプルコード
@@ -204,6 +205,7 @@ IxirSでは、リポジトリで機能を実装するときに永続ストレー
 ![Untitled Diagram (2)](https://user-images.githubusercontent.com/57429437/87560817-d077fb80-c6f6-11ea-8547-a9fa092b0ce2.png)
 
 [SlickRunDBAction](https://github.com/ixias-net/ixias/blob/develop/framework/ixias-core/src/main/scala/ixias/persistence/action/SlickDBAction.scala#L66)
+
 `SlickRunDBAction`にテーブルと永続ストレージ(defaultではmaster)を指定することでdb.runという`slick.jdbc.JdbcBackend`トレイトに用意されている(実際はDatabaseDefというクラス)タイプのメソッドを非同期で実行しFutureとして返しています。
 
 ```scala
@@ -226,9 +228,10 @@ val DEFAULT_DSN_KEY = DataSourceName.RESERVED_NAME_MASTER  // "master"
 ```
 
 
-#### application.conf
-Slick用のDB設定をapplication.confに追記します。
+#### データベース設定(application.conf)
+IxiaS用のDB設定をapplication.confに追記します。
 readonlyがfalseなら先頭サーバを参照し、trueなら二番目以降のサーバを参照するというものです。
+SlickDBActionProviderからDatabaseConfigを取得し、そこから、Databaseインスタンスを取得するという方法のようです。
 ```scala
 ixias.db.mysql {
   username                      = "username"
@@ -247,6 +250,20 @@ ixias.db.mysql {
 }
 
 ```
+## まとめ
+今回研修で初めて触る言語(Scala)で書かれた社内OSSの一機能をご紹介しました。
+IxiaSにはドキュメントがなく、更に研修で初めて触る言語(Scala)で書かれていたため最初はIxiaSの定義元を読みに行くのが大変でした。元々定義元を見に行って実装を行うという勉強もしていなかったため今回の研修では、知識を増やすだけだはなく定義元を見に行って実装を行っていくという習慣を身に着けるきっかけにもなりました。
+IxiaSで実装されている内容を見にいくことで、Scalaの書き方の参考にもなりました。
+また型を意識するようにもなり、研修を始める前の独学で少しScalaを勉強していた時よりもScalaの知識が深まったと思います。
+最後まで読んでいただき、ありがとうございました！
+
+## 参考文献
+[今さら聞けないIT用語：やたらと耳にするけど「API」って何？](https://data.wingarc.com/what-is-api-16084)<br>
+[Best Practices for Using Slick on Production](https://blog.knoldus.com/best-practices-for-using-slick-on-production/)<br>
+[Future や ExecutionContext をなんとなく触ってる人のために](https://qiita.com/takat0-h0rikosh1/items/b42cd4dd4ca0fc6770fa)<br>
+[Scala 自分型](https://docs.scala-lang.org/ja/tour/self-types.html)<br>
+
+---
 app/lib/persistence/db/SlickResourceProvider.scala
 ```scala
 
@@ -291,8 +308,3 @@ package object persistence {
   }
 }
 ```
-## 参考文献
-[今さら聞けないIT用語：やたらと耳にするけど「API」って何？](https://data.wingarc.com/what-is-api-16084)<br>
-[Best Practices for Using Slick on Production](https://blog.knoldus.com/best-practices-for-using-slick-on-production/)<br>
-[Future や ExecutionContext をなんとなく触ってる人のために](https://qiita.com/takat0-h0rikosh1/items/b42cd4dd4ca0fc6770fa)<br>
-[自分型](https://docs.scala-lang.org/ja/tour/self-types.html)<br>
