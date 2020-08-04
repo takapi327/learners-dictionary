@@ -12,6 +12,7 @@ OOPやDDDに興味がありをなんとなくではなく意識して開発を�
 初学者や未経験で頑張っている方に読んでいただいて、興味を持っていただければと思っております。
 
 ## 結論(感想)
+※現段階で思っていること<br>
 結論(感想)を最初に言ってしまうと、「何が正解かわからない。。。意識することが多い。。。」でした。
 OOPとDDDの両方を意識しての開発を初めて進めてみたのですが、最適解がわからない階層構造って、、、という状態
 ユビキタス言語やロバネスク分析などを行うには情報が少なすぎた。等色々な壁があり実際にリファクタリングを行うまでにかなり時間を取られてしまいました。
@@ -76,13 +77,39 @@ MySQL
 
 #### Entity
 - User
+```
+case class User(
+  UserId:   Option[UserId],
+  fullName: UserName,
+  mail:     String
+){
+  val mailPattern = 
+	"""[a-zA-Z0-9\.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*""".r
+  require(
+    mailPattern.matches(mail),
+    mail
+  )
+}
+```
+
 - UserAuthenticate
 #### ValueObject
 - UserId
-
+```
+case class UserId (id: Long)
+```
+- UserName
+```
+case class Name (
+  firstName: String,
+  lastName:  String
+) {
+  lazy val fullName =
+	s"${firstName} ${lastName}"
+}
+```
 #### Service
-- nickname
-- mail
+
 
 < 図 >
 
@@ -97,17 +124,24 @@ DB設計に関しては、同期におすすめしていただいている「SQL
 |user_id|BIGINT(20)|unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY|
 |full_name|VARCHAR(255)||
 |mail|VARCHAR(255)|CHARSET ascii  NOT NULL UNIQUE KEY|
- #### UserAuthenticateTable
+#### Table
 |カラム名|型|制約|
 |-|-|-|
 |user_id|BIGINT(20)|PRIMARY KEY|
 |nick_name|VARCHAR(255)||
 |password|VARCHAR(255)|CHARSET ascii  NOT NULL|
+ #### UserAuthenticateTable
+|カラム名|型|制約|
+|-|-|-|
+|user_id|BIGINT(20)|PRIMARY KEY|
 |token|VARCHAR(255)|CHARSET ascii UNIQUE KEY|
 
 ### ユースケースモデリング
 >ユースケースモデリングとは？
 ユーザーがシステムで何をするのか？何をできるのか？何をできないのか？といったことを明確化するためのもの。
+
+個人的にこれを作成してから実装に入ることで、どういう処理が必要なのかどこで例外が発生して発生した例外をどのようにして対処するのかが明確になり、スムーズに開発を進めることができました。
+またテストを行うときも簡易なテスト仕様書のようになっているためやりやすいと感じました。
 
 |タイトル|内容|
 |-|-|
@@ -138,16 +172,21 @@ DB設計に関しては、同期におすすめしていただいている「SQL
 |前提条件|ログイン状態であること|
 |メインフロー|1.ユーザーは「ログアウト」ボタンを押す<br>2. システムは認証用のTokenを削除<br>3.システムは画面を「ログアウト画面」から「トップページ」に遷移させる|
 |例外処理||
+
 ### 画面設計(画面遷移図)
 ### 画面設計(ワイヤーフレーム)
-
-
 ### ロバストネス分析
+※要修正
+
+![Copy of Untitled Diagram-Page-2](https://user-images.githubusercontent.com/57429437/89135579-7f2a9180-d569-11ea-8d7b-651d833ee505.png)
+
 ### クラス図
 ### データモデリング(ER図)
 ### UI設計
 ### 実装
 ### 認証用のActionBuilder
+※現状
+https://github.com/takapi327/scala-play-app/blob/feature/2020-07-SPA-013-Refactaring-OOP-ActionBuilder/app/action/Auth.scala#L23
 
 ### まとめ
 ## 参考文献
@@ -162,5 +201,6 @@ DB設計に関しては、同期におすすめしていただいている「SQL
 [ロバストネス図を活用したシステム設計](https://thinkit.co.jp/article/13487)
 [データベーステーブル設計の基礎の基礎〜エンティティの抽出・定義から正規化まで](https://employment.en-japan.com/engineerhub/entry/2018/06/22/110000)
 [Scalaでイミュータブルなエンティティを実装する](https://dnskimox.hateblo.jp/entry/2019/12/13/212742)
+[memcachedの使い方](http://4geek.net/how-to-use-memcached/)
 ### IxirS
 https://medium.com/nextbeat-engineering/%E8%87%AA%E7%A4%BEoss-ixias-%E3%81%AE%E7%B4%B9%E4%BB%8B-ixais-model%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%82%B3%E3%83%BC%E3%83%89-d6e0e5d8e8aa
