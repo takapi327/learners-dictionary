@@ -79,9 +79,9 @@ MySQL
 - User
 ```
 case class User(
-  UserId:   Option[UserId],
-  fullName: UserName,
-  mail:     String
+  userId:   Option[UserId],
+  nameInfo: UserName,
+  email:    String
 ){
   val mailPattern = 
 	"""[a-zA-Z0-9\.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*""".r
@@ -91,8 +91,25 @@ case class User(
   )
 }
 ```
+- UserPassword
+```
+case class UserPassword (
+  userId:  Option[UserId],
+  hash:    String
+)
+```
+```
+def hash(password: String): String = PBKDF2.hash(password)
+def verify(password: String, hash: String): Boolean = PBKDF2.compare(password, hash)
+```
 
-- UserAuthenticate
+- AuthToken
+```
+case class AuthToken(
+  id:     Option[Id],
+  userId: User.Id,
+)
+```
 #### ValueObject
 - UserId
 ```
@@ -100,7 +117,7 @@ case class UserId (id: Long)
 ```
 - UserName
 ```
-case class Name (
+case class UserName (
   firstName: String,
   lastName:  String
 ) {
@@ -108,8 +125,8 @@ case class Name (
 	s"${firstName} ${lastName}"
 }
 ```
-#### Service
 
+#### Service
 
 < 図 >
 
