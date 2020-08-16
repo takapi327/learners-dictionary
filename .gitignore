@@ -14,3 +14,6 @@ ui/dist
 .metals.sbt
 /RUNNING_PID
 docker/db/data/
+node_modules/
+package-lock.json
+package.json
