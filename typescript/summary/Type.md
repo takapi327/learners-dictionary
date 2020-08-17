@@ -45,7 +45,18 @@ nameは文字列(string)の'hogehoge'型となっており、’hogehoge’と�
 同じstring型でもある特定の文字だけとして型を指定できるのが、リテラル型です。
 ※リテラル型はstring型のようにプリミティブ型と同じような型もしてできます。
 
+### 型推論
+型推論とは、リテラル型で上記のように明示的に型を指定しなくても型を指定できることです。
+```ts
+const name = "hogehoge";
 
+name = "hugahuga";
+// Type '"hugahuga"' is not assignable to type '"hogehoge"'.
+```
+上記のように明示的に型を指定しなくても、定数nameは文字列の"hogehoge"以外を代入できなくなりました。
+これが型推論の働きです。
+JavaScriptを触った方はわかるとご存知だと思いますが、JSでconstとは再代入することができない変数を指しています。つまり上記の場合だと変数nameは永続的に"hogehoge"だと保証されて、他の値で書き換えることができないということになります。
+なので、明示的に型を指定しなくてもconstで指定した変数はリテラル型を同じように扱うことができるということです。
 ## 参考文献
 [公式]
 [Intro to the TSConfig Reference](https://www.staging-typescript.org/tsconfig)
