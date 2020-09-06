@@ -1,3 +1,4 @@
+/*
 object June28th extends App {
 
   case class User(
@@ -102,3 +103,4 @@ object June28th extends App {
     //println(v)
 }
 
+*/
