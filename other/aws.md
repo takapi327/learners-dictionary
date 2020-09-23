@@ -78,3 +78,33 @@
 ## [AWS Direct Connect](https://aws.amazon.com/jp/directconnect/)
 - オンプレミスから AWS への専用ネットワーク接続の構築をシンプルにするクラウドサービスソリューション
 - お客様のネットワークと AWS Direct Connect のいずれかのロケーションとの間に専用のネットワーク接続を確立することができます
+
+## [AWSリージョン](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)
+- リージョンはそれぞれ、地理的に離れた領域
+- 他の Amazon EC2 リージョンと完全に分離されるように設計されています
+- 最大限の耐障害性と安定性
+
+## [AWSアベイラビリティーゾーン](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)
+- リージョンごとにアベイラビリティーゾーンと呼ばれる複数の独立した場所があります
+- インスタンスを起動するときに、アベイラビリティーゾーンを自分で選択
+- Elastic IP アドレスを使用すると、あるアベイラビリティーゾーンのインスタンスの障害を、別のアベイラビリティーゾーンのインスタンスにアドレスをすばやく再マッピングすることによってマスクできます
+
+## [AWSエッジロケーション](https://aws.amazon.com/jp/cloudfront/features/)
+- エンドユーザーにコンテンツをより低いレイテンシーで届ける
+
+## [AWS Cloud Directory](https://aws.amazon.com/jp/cloud-directory/)
+- 組織図、コースカタログ、デバイスレジストリなど、さまざまなユースケースのディレクトリを作成できます
+- 何億というオブジェクトへのスケールも自動的に行われ、複数のアプリケーション間で共有できる拡張可能なスキーマが利用できます
+
+## [AWS Identity and Access Management](https://aws.amazon.com/jp/iam/)
+- AWS のサービスやリソースへのアクセスを安全に管理
+- AWS のユーザーとグループを作成および管理し、アクセス権を使用して AWS リソースへのアクセスを許可および拒否できます
+
+## [多要素認証（MFA）](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/id_credentials_mfa.html)
+- AWS ウェブサイトやサービスにアクセスするときに、ユーザーは、通常のログイン認証情報に加えて、AWS でサポートされている MFA メカニズムからの一意の認証情報を求められるためです
+
+## [AWS CloudTrail](https://aws.amazon.com/jp/cloudtrail/)
+- AWS アカウントのガバナンス、コンプライアンス、運用監査、リスク監査を行うためのサービス
+- AWS インフラストラクチャ全体でアカウントアクティビティをログに記録し、継続的に監視し、保持できます
+- AWS のサービスを使用して実行されるアクションなど、AWS アカウントアクティビティのイベント履歴を把握
+
