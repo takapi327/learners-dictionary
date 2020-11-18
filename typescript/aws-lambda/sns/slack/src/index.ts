@@ -1,7 +1,9 @@
 exports.handler = async(event: any) => {
-  var rp = require('request-promise');
+  var rp      = require('request-promise');
+  var message = JSON.parse(JSON.parse(JSON.stringify(event.Records[0].Sns.Message)))
   console.log(JSON.stringify(event));
-  const URL: string = 'https://hooks.slack.com/services/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';
+  console.log(event)
+  const URL: string = 'https://hooks.slack.com/services/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';
 
   let option = {
     'url': URL,
@@ -11,7 +13,91 @@ exports.handler = async(event: any) => {
     'method': 'POST',
     'json': true,
     'body': {
-      'text': event.Records[0].Sns.Message
+      'blocks': [
+        {
+         'type': 'section',
+         'fields': [
+           {
+             'type': 'mrkdwn',
+             'text': '*Repository Name:*'
+           },
+           {
+             'type': 'mrkdwn',
+             'text': message['detail']['repository-name']
+           },
+           {
+             'type': 'mrkdwn',
+             'text': '*Time*:'
+           },
+           {
+             'type': 'mrkdwn',
+             'text': message['time']
+           },
+           {
+             'type': 'mrkdwn',
+             'text': '*Action Type:*'
+           },
+           {
+             'type': 'mrkdwn',
+             'text': message['detail']['action-type']
+           },
+           {
+             'type': 'mrkdwn',
+             'text': '*Result:*'
+           },
+           {
+             'type': 'mrkdwn',
+             'text': message['detail']['result']
+           },
+           {
+             'type': 'mrkdwn',
+             'text': '*Version:*'
+           },
+           {
+             'type': 'mrkdwn',
+             'text': message['detail']['image-tag']
+           }
+         ]
+        },
+        {
+          'type': 'section',
+          'text': {
+            'type': 'mrkdwn',
+            'text': 'Reflect in the production environment.'
+          },
+          'accessory': {
+            'type': 'button',
+            'text': {
+              'type': 'plain_text',
+              'text': 'Deploy',
+              'emoji': true
+            },
+            'style': 'primary',
+            'value': 'deploy_123',
+            'url': 'https://google.com',
+            'action_id': 'button-action'
+          }
+        },
+        {
+         'type': 'section',
+         'text': {
+           'type': 'mrkdwn',
+           'text': 'Cancellation of updates.'
+         },
+         'accessory': {
+           'type': 'button',
+           'text': {
+             'type': 'plain_text',
+             'text': 'Cancel',
+             'emoji': true
+           },
+           'style': 'danger',
+           'value': 'cancel_123',
+           'url': 'https://google.com',
+           'action_id': 'button-action'
+         }
+        }
+      ]
     }
   };
 
