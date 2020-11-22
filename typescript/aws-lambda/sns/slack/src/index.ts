@@ -3,7 +3,8 @@ exports.handler = async(event: any) => {
   var message = JSON.parse(JSON.parse(JSON.stringify(event.Records[0].Sns.Message)))
   console.log(JSON.stringify(event));
   console.log(event)
-  const URL: string = 'https://hooks.slack.com/services/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';
+  const URL:     string = 'https://hooks.slack.com/services/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';
+  const API_URL: string = 'https://kagxd4svs7.execute-api.ap-northeast-1.amazonaws.com/Slack/';
 
   let option = {
     'url': URL,
@@ -74,7 +75,7 @@ exports.handler = async(event: any) => {
             },
             'style': 'primary',
             'value': 'deploy_123',
-            'url': 'https://google.com',
+            'url': API_URL,
             'action_id': 'button-action'
           }
         },
@@ -93,7 +94,7 @@ exports.handler = async(event: any) => {
            },
            'style': 'danger',
            'value': 'cancel_123',
-           'url': 'https://google.com',
+           'url': API_URL,
            'action_id': 'button-action'
          }
         }
