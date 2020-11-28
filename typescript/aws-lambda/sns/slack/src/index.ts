@@ -5,7 +5,7 @@ exports.handler = async(event: any) => {
 
   console.log(message)
 
-  const web = new WebClient('xoxb-1276255441778-1526109750944-B60PbQbvoeAzusHX51CthpnH');
+  const web = new WebClient(process.env.Slack_API_Token);
   
   const params = { 
     channel: 'C017PFW6D1D',
