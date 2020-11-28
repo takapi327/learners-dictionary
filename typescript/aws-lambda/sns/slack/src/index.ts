@@ -5,7 +5,7 @@ exports.handler = async(event: any) => {
 
   console.log(message)
 
-  const web = new WebClient('xoxb-1276255441778-1526109750944-ubOUX1DEpP5Sc1G3DlMEcgUJ');
+  const web = new WebClient('xoxb-1276255441778-1526109750944-B60PbQbvoeAzusHX51CthpnH');
   
   const params = { 
     channel: 'C017PFW6D1D',
