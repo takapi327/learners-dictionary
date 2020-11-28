@@ -8,107 +8,82 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+const { WebClient } = require('@slack/web-api');
 exports.handler = (event) => __awaiter(void 0, void 0, void 0, function* () {
-    var rp = require('request-promise');
     var message = JSON.parse(JSON.parse(JSON.stringify(event.Records[0].Sns.Message)));
-    console.log(JSON.stringify(event));
-    console.log(event);
-    const URL = 'https://hooks.slack.com/services/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';
-    let option = {
-        'url': URL,
-        'header': {
-            'Content-Type': 'application/json'
-        },
-        'method': 'POST',
-        'json': true,
-        'body': {
-            'blocks': [
-                {
-                    'type': 'section',
-                    'fields': [
-                        {
-                            'type': 'mrkdwn',
-                            'text': '*Repository Name:*'
-                        },
-                        {
-                            'type': 'mrkdwn',
-                            'text': message['detail']['repository-name']
-                        },
-                        {
-                            'type': 'mrkdwn',
-                            'text': '*Time*:'
-                        },
-                        {
-                            'type': 'mrkdwn',
-                            'text': message['time']
-                        },
-                        {
-                            'type': 'mrkdwn',
-                            'text': '*Action Type:*'
-                        },
-                        {
-                            'type': 'mrkdwn',
-                            'text': message['detail']['action-type']
-                        },
-                        {
-                            'type': 'mrkdwn',
-                            'text': '*Result:*'
-                        },
-                        {
-                            'type': 'mrkdwn',
-                            'text': message['detail']['result']
-                        },
-                        {
-                            'type': 'mrkdwn',
-                            'text': '*Version:*'
-                        },
-                        {
-                            'type': 'mrkdwn',
-                            'text': message['detail']['image-tag']
-                        }
-                    ]
-                },
-                {
-                    'type': 'section',
-                    'text': {
-                        'type': 'mrkdwn',
-                        'text': 'Reflect in the production environment.'
+    console.log(message);
+    const web = new WebClient('xoxb-1276255441778-1526109750944-ubOUX1DEpP5Sc1G3DlMEcgUJ');
+    const params = {
+        channel: 'C017PFW6D1D',
+        text: 'The image shown below has been uploaded',
+        blocks: [
+            {
+                "type": "section",
+                "fields": [
+                    {
+                        "type": "mrkdwn",
+                        "text": "*Repository Name:*"
                     },
-                    'accessory': {
-                        'type': 'button',
-                        'text': {
-                            'type': 'plain_text',
-                            'text': 'Deploy',
-                            'emoji': true
-                        },
-                        'style': 'primary',
-                        'value': 'deploy_123',
-                        'url': 'https://google.com',
-                        'action_id': 'button-action'
-                    }
-                },
-                {
-                    'type': 'section',
-                    'text': {
-                        'type': 'mrkdwn',
-                        'text': 'Cancellation of updates.'
+                    {
+                        "type": "mrkdwn",
+                        "text": message['detail']['repository-name']
                     },
-                    'accessory': {
-                        'type': 'button',
-                        'text': {
-                            'type': 'plain_text',
-                            'text': 'Cancel',
-                            'emoji': true
-                        },
-                        'style': 'danger',
-                        'value': 'cancel_123',
-                        'url': 'https://google.com',
-                        'action_id': 'button-action'
+                    {
+                        "type": "mrkdwn",
+                        "text": "*Time*:"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": message['time']
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": "*Action Type:*"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": message['detail']['action-type']
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": "*Result:*"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": message['detail']['result']
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": "*Version:*"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": message['detail']['image-tag']
                     }
-                }
-            ]
-        }
+                ]
+            }
+        ],
+        attachments: [
+            {
+                "callback_id": "deploy-action",
+                "text": "Can be reflected in the production",
+                "actions": [
+                    {
+                        "name": "Deploy",
+                        "text": "Deploy",
+                        "type": "button",
+                        "style": "primary"
+                    },
+                    {
+                        "name": "Cancel",
+                        "text": "Cancel",
+                        "type": "button",
+                        "style": "danger"
+                    }
+                ]
+            }
+        ]
     };
-    let result = yield rp(option).promise();
-    console.log(result);
+    console.log(params);
+    yield web.chat.postMessage(params).then(console.log).catch(console.error);
 });
