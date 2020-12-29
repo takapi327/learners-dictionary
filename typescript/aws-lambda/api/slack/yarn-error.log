@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /Users/takapi327/.yarn/bin/yarn.js add @type/request
+  /usr/local/bin/node /Users/takapi327/.yarn/bin/yarn.js add @type/request-promise
 
 PATH: 
   /Users/takapi327/.yarn/bin:/Users/takapi327/.config/yarn/global/node_modules/.bin:/Users/takapi327/.cargo/bin:/Users/takapi327/.nodebrew/current/bin:/Users/takapi327/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/takapi327/.yarn/bin:/Users/takapi327/.config/yarn/global/node_modules/.bin:/Users/takapi327/.cargo/bin:/Users/takapi327/.nodebrew/current/bin:/Users/takapi327/.cache/dein/repos/github.com/junegunn/fzf/bin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@type%2frequest: Not found
+  Error: https://registry.yarnpkg.com/@type%2frequest-promise: Not found
       at Request.params.callback [as _callback] (/Users/takapi327/.yarn/lib/cli.js:66987:18)
       at Request.self.callback (/Users/takapi327/.yarn/lib/cli.js:140748:22)
       at Request.emit (events.js:315:20)
@@ -32,6 +32,9 @@ npm manifest:
     "version": "1.0.0",
     "main": "index.js",
     "license": "MIT",
+    "scripts": {
+      "build": "sh ./build.sh"
+    },
     "devDependencies": {
       "@types/aws-lambda": "^8.10.64",
       "@types/node": "^14.14.9",

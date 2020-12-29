@@ -9,12 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const { WebClient } = require('@slack/web-api');
+const { createMessageAdapter } = require('@slack/interactive-messages');
+const { qs } = require('qs');
+const { axios } = require('axios');
+const { App } = require('@slack/bolt');
+const slackInteractions = createMessageAdapter('5db9d3349e7830b149daf815e84067e4');
+const port = process.env.PORT || 3000;
+const app = new App({
+    token: process.env.SLACK_API_TOKEN,
+    signingSecret: process.env.SLACK_SIGNING_SECRET
+});
 exports.handler = (event) => __awaiter(void 0, void 0, void 0, function* () {
     var message = JSON.parse(JSON.parse(JSON.stringify(event.Records[0].Sns.Message)));
-    console.log(message);
-    const web = new WebClient('xoxb-1276255441778-1526109750944-7Y1JlNFfaobT6wK9EE7nWGve');
+    const web = new WebClient(process.env.SLACK_API_TOKEN);
     const params = {
-        channel: 'C017PFW6D1D',
+        channel: process.env.SLACK_CHANNEL,
         text: 'The image shown below has been uploaded',
         blocks: [
             {
@@ -61,29 +70,28 @@ exports.handler = (event) => __awaiter(void 0, void 0, void 0, function* () {
                         "text": message['detail']['image-tag']
                     }
                 ]
-            }
+            },
         ],
         attachments: [
             {
-                "callback_id": "deploy-action",
+                "callback_id": 'deploy_action',
                 "text": "Can be reflected in the production",
                 "actions": [
                     {
                         "name": "Deploy",
                         "text": "Deploy",
                         "type": "button",
-                        "style": "primary"
+                        "value": "deploy_action",
                     },
                     {
                         "name": "Cancel",
                         "text": "Cancel",
                         "type": "button",
-                        "style": "danger"
+                        "value": "cancel_action",
                     }
                 ]
             }
         ]
     };
-    console.log(params);
-    yield web.chat.postMessage(params).then(console.log).catch(console.error);
+    yield web.chat.postMessage(params).catch(console.error);
 });
