@@ -8,20 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { WebClient } = require('@slack/web-api');
-const { createMessageAdapter } = require('@slack/interactive-messages');
-const { qs } = require('qs');
-const { axios } = require('axios');
-const { App } = require('@slack/bolt');
-const slackInteractions = createMessageAdapter('5db9d3349e7830b149daf815e84067e4');
-const port = process.env.PORT || 3000;
-const app = new App({
-    token: process.env.SLACK_API_TOKEN,
-    signingSecret: process.env.SLACK_SIGNING_SECRET
-});
+Object.defineProperty(exports, "__esModule", { value: true });
+const web_api_1 = require("@slack/web-api");
 exports.handler = (event) => __awaiter(void 0, void 0, void 0, function* () {
     var message = JSON.parse(JSON.parse(JSON.stringify(event.Records[0].Sns.Message)));
-    const web = new WebClient(process.env.SLACK_API_TOKEN);
+    const web = new web_api_1.WebClient(process.env.SLACK_API_TOKEN);
     const params = {
         channel: process.env.SLACK_CHANNEL,
         text: 'The image shown below has been uploaded',
@@ -81,13 +72,13 @@ exports.handler = (event) => __awaiter(void 0, void 0, void 0, function* () {
                         "name": "Deploy",
                         "text": "Deploy",
                         "type": "button",
-                        "value": "deploy_action",
+                        "value": "deploy_action"
                     },
                     {
                         "name": "Cancel",
                         "text": "Cancel",
                         "type": "button",
-                        "value": "cancel_action",
+                        "value": "cancel_action"
                     }
                 ]
             }
