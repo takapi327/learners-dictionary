@@ -10,33 +10,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const web_api_1 = require("@slack/web-api");
-//const { WebClient } = require('@slack/bolt');
 const web = new web_api_1.WebClient(process.env.SLACK_API_TOKEN);
 exports.handler = (event) => __awaiter(void 0, void 0, void 0, function* () {
     const decodeMessage = decodeURIComponent(event.body).replace("payload=", "");
     const jsonDecodeMessage = JSON.parse(JSON.parse(JSON.stringify(decodeMessage)));
+    var deployMessage = '';
+    if (jsonDecodeMessage.actions[0].name == 'Deploy') {
+        deployMessage = 'イメージがアップされました';
+    }
+    else {
+        deployMessage = 'キャンセルされました';
+    }
     const params = {
         channel: process.env.SLACK_CHANNEL,
-        //ts: '1606633279.001200',
         ts: jsonDecodeMessage.message_ts,
         text: '',
         attachments: [
             {
-                'text': 'イメージがアップされました'
+                'text': deployMessage
             }
         ]
     };
-    /*
-    const params = {
-      channel: process.env.SLACK_CHANNEL!,
-      text: 'test',
-      attachments: [
-        {
-          'text': 'ボタンアクションのテスト'
-        }
-      ]
-    }
-    */
     yield web.chat.update(params).catch(console.error);
-    //await web.chat.postMessage(params).catch(console.error)
 });
