@@ -65,7 +65,7 @@ exports.handler = async(event: any) => {
             "name":  "Deploy",
             "text":  "Deploy",
             "type":  "button",
-            "value": "deploy_action"
+            "value": message['detail']['image-tag']
           },
           {
             "name":  "Cancel",

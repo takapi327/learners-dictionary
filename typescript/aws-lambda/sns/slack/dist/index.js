@@ -72,7 +72,7 @@ exports.handler = (event) => __awaiter(void 0, void 0, void 0, function* () {
                         "name": "Deploy",
                         "text": "Deploy",
                         "type": "button",
-                        "value": "deploy_action"
+                        "value": message['detail']['image-tag']
                     },
                     {
                         "name": "Cancel",
