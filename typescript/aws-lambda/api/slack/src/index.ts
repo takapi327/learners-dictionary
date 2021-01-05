@@ -133,9 +133,9 @@ exports.handler = async(event: any) => {
 
   /** Slack message settings */
   const params = { 
-    channel: process.env.SLACK_CHANNEL!,
-    ts: jsonDecodeMessage.message_ts,
-    text: '',
+    channel:     process.env.SLACK_CHANNEL!,
+    ts:          jsonDecodeMessage.message_ts,
+    text:        '',
     attachments: [
       {
         'text': ''
@@ -144,56 +144,20 @@ exports.handler = async(event: any) => {
   }
 
   if(actions.name == 'Deploy') {
-    //ecs.registerTaskDefinition(RegisterTaskDefinitionRequest, function(err, data) {
-    //  if(err) console.log(err); else console.log(data);
-    //}).promise().then(taskDefinition => {
-
-    //  console.log(`Finish creating the Taskdefinition = ${taskDefinition}`)
-
-    //  /**
-    //   * @SEE https://github.com/aws/aws-sdk-js/blob/1ad9d3ca76d56051e106fdf70f123a02047ebafe/clients/ecs.d.ts#L302
-    //   */
-    //  ecs.runTask(RunTaskRequest, function(err, data) {
-    //    if(err) console.log(err); else console.log(data);
-    //  }).promise().then(runTask => {
-
-    //    console.log(`Task is now running = ${runTask}`)
-
-    //    /**
-    //     * @SEE https://github.com/aws/aws-sdk-js/blob/1ad9d3ca76d56051e106fdf70f123a02047ebafe/clients/ecs.d.ts#L34
-    //     */
-    //    ecs.createService(CreateServiceRequest, function(err, data) {
-    //      if(err) console.log(err); else console.log(data);
-    //    }).promise().then(ecsService => {
-    //      console.log(`Created ECS services = ${ecsService}`)
-
-    //      updateSlackMessage('イメージがアップされました')
-
-    //    }).catch(error => {
-    //      console.error(error)
-    //      updateSlackMessage('サービスの作成に失敗しました')
-    //    })
-
-    //  }).catch(error => {
-    //    console.log(error)
-    //    updateSlackMessage('タスクの起動に失敗しました')
-    //  })
-    //}).catch(error => {
-    //  console.log(error)
-    //  updateSlackMessage('タスクの作成に失敗しました')
-    //})
-
     /**
      * @SEE https://github.com/aws/aws-sdk-js/blob/1ad9d3ca76d56051e106fdf70f123a02047ebafe/clients/ecs.d.ts#L290
      */
     ecs.registerTaskDefinition(RegisterTaskDefinitionRequest, function(err, data) {
-      if(err) console.log(`タスクの作成に失敗しました:${err}`);
-      else    console.log(`タスクの作成に成功しました:${data}`);
+      if(err) console.log(`タスクの作成に失敗しました:${JSON.stringify(err)}`);
+      else    console.log(`タスクの作成に成功しました:${JSON.stringify(data)}`);
     });
 
+    /**
+     * @SEE https://github.com/aws/aws-sdk-js/blob/1ad9d3ca76d56051e106fdf70f123a02047ebafe/clients/ecs.d.ts#L394
+     */
     await ecs.updateService(UpdateServiceRequest, function(err, data) {
-       if(err) console.log(`サービスの更新に失敗しました:${err}`)
-       else    console.log(`サービスの更新に成功しました:${data}`)
+       if(err) console.log(`サービスの更新に失敗しました:${JSON.stringify(err)}`)
+       else    console.log(`サービスの更新に成功しました:${JSON.stringify(data)}`)
     }).promise();
 
     params.attachments[0].text = 'イメージがアップされました'
@@ -201,6 +165,8 @@ exports.handler = async(event: any) => {
     params.attachments[0].text = 'キャンセルされました'
   }
 
-  await web.chat.update(params).catch(console.error)
+  await web.chat.update(params).then((res) => {
+    console.log(`イメージの更新を行いました:${JSON.stringify(res)}`)
+  }).catch(console.error)
 }
 
