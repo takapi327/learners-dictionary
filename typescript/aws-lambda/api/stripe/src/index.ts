@@ -21,12 +21,14 @@ exports.handler = async (event: any, context: any, callback: any) => {
   console.log(`Stripe API Key${apiKey}`)
 
   console.log(event)
+  console.log(event.body)
+  console.log(event.rowBody)
   console.log(signature)
 
   const stripe = new Stripe(apiKey, { apiVersion: '2020-08-27' })
   let eventReceived: Stripe.Event;
   try {
-    eventReceived = stripe.webhooks.constructEvent(event.body, signature, secret)
+    eventReceived = stripe.webhooks.constructEvent(event.rowBody, signature, secret)
   } catch (err) {
     const response = {
       statusCode: 400,
