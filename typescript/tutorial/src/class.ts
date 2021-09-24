@@ -138,4 +138,69 @@ let A: boolean = a.isDelete(1)
 let b: MultiSetw = a.isAdd(1)
 a.isHas(1)
 
+class RequestBuilder {
 
+  private url:    string | null         = null
+  private method: 'get' | 'post' | null = null
+  private data:   object | null         = null
+
+  setMethod(method: 'get' | 'post'): this {
+    this.method = method
+    return this
+  }
+
+  setData(data: object): this {
+    this.data = data
+    return this
+  }
+
+  setUrl(url: string): this {
+    this.url = url
+    return this
+  }
+}
+
+let req = new RequestBuilder()
+  .setUrl('/users')
+  .setMethod('get')
+  .setData({firstName: 'Alis'})
+
+class c {
+  constructor(
+    protected value: string
+  ){}
+}
+
+class d extends c {}
+
+let e = new d("test")
+
+
+/*
+type Shoe = {
+  purpose: string
+  (type: 'balletFlat'): BalletFlat
+}
+
+class BalletFlat implements Shoe {
+  purpose = 'dancing'
+}
+
+class Boot implements Shoe {
+  purpose = 'woodcutting'
+}
+
+class Sneaker implements Shoe {
+  purpose = 'walking'
+}
+
+let Shoe = {
+  create(type: 'balletFlat' | 'boot' | 'sneaker'): Shoe {
+    switch(type) {
+      case 'balletFlat': return new BalletFlat
+      case 'boot':       return new Boot
+      case 'sneaker':    return new Sneaker
+    }
+  }
+}
+*/

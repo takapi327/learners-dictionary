@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="api-dist">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/api/slack/api-dist/api-dist.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
