@@ -17,7 +17,7 @@
     "@slack/web-api": "^5.14.0",
     "@types/request": "^2.48.5",
     "@types/request-promise": "^4.1.46",
-    "axios": "^0.21.0",
+    "axios": "^0.21.2",
     "qs": "^6.9.4",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
