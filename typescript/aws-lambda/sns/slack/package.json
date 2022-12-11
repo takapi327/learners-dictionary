@@ -18,7 +18,7 @@
     "@types/request": "^2.48.5",
     "@types/request-promise": "^4.1.46",
     "axios": "^0.21.0",
-    "qs": "^6.9.4",
+    "qs": "^6.9.7",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "slack": "^11.0.2"
